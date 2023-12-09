@@ -1,33 +1,70 @@
 package Controller;
 
 import DAO.LoginDAO;
+import JDBCUtils.HandleException;
 import Models.TaiKhoan;
-
+import java.io.IOException;
+import javax.mail.MessagingException;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
 
-@WebServlet("/login")
+
+@WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet"})
 public class LoginController extends HttpServlet
 {
+    private String host;
+    private String port;
+    private String user;
+    private String pass;
     private static final long serialVersionUID = 1L;
     private LoginDAO loginDAO=null;
     public void init()
     {
+        ServletContext context = getServletContext();
+        host = context.getInitParameter("host");
+        port = context.getInitParameter("port");
+        user = context.getInitParameter("user");
+        pass = context.getInitParameter("pass");
         loginDAO = new LoginDAO();
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
-        response.sendRedirect("views/system/login.jsp");
-    }
+            throws ServletException, IOException {
+        String action = request.getServletPath();
+        switch (action) {
+            case "/EmailSendingServlet":
 
+                try {
+                    EmailSendingServlet(request, response);
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+
+                break;
+            case "/login":
+                authenticate(request, response);
+                break;
+        }
+
+
+
+
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        authenticate(request, response);
+        doGet(request,response);
     }
     private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
@@ -62,4 +99,33 @@ public class LoginController extends HttpServlet
             e.printStackTrace();
         }
     }
+
+    private void EmailSendingServlet(HttpServletRequest request,
+                                     HttpServletResponse response) throws ServletException, IOException, MessagingException {
+        // reads form fields
+        String email = request.getParameter("email");
+        String tendangnhap = request.getParameter("tenDangNhap");
+        try
+        {
+            String mk=LoginDAO.LayMatKhau(tendangnhap,email);
+            if(mk!= "") {
+                LoginDAO.sendEmail(host, port, user, pass, email, tendangnhap);
+                response.sendRedirect("views/system/login.jsp");
+            }
+            else{
+                request.setAttribute("errMsg", "Tài khoản hoặc email không chính xác");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/system/forgotPass.jsp");
+                dispatcher.forward(request, response);
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 }
+
+

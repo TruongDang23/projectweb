@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: GIGABYTE
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +39,10 @@
 </head>
 <body>
 <script src="https://use.fontawesome.com/f59bcd8580.js"></script>
+<%
+    String err = (String) request.getAttribute("errMsg");
+    String mk = (String) session.getAttribute("mk");
+%>
 <div class="container">
     <div class="row m-6 mt-3 bg-white no-gutters shadow-lg">
         <h2 class="text-center mt-3 p-1">Hệ Thống Quản Lí Nhân Sự Công Ty</h2>
@@ -53,7 +59,7 @@
             </p>
             <h3 class="pb-3 mt-2 text-center">Quên mật khẩu</h3>
             <div class="form-style">
-                <form id="commonForm">
+                <form action="<%=request.getContextPath()%>/EmailSendingServlet",id="commonForm" method="post">
                     <div
                             class="form-group pb-3 d-flex align-items-center justify-content-around"
                     >
@@ -77,7 +83,8 @@
                                 type="username"
                                 placeholder="Tên đăng nhập"
                                 class="form-control w-75"
-                                id="username"
+                                id="tenDangNhap"
+                                name="tenDangNhap"
                                 aria-describedby="username"
                                 required
                         />
@@ -106,9 +113,13 @@
                                 placeholder="Email"
                                 class="form-control w-75"
                                 id="email"
+                                name="email"
                                 required
                         />
                     </div>
+                    <% if (err!=null) {%>
+                    <p style="color: red; text-align: center"><b><%= err %></b></p>
+                    <%} %>
                     <div class="pb-2 mb-4 text-center">
                         <button
                                 type="submit"

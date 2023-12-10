@@ -147,7 +147,7 @@
                     <div class="panel-heading">Danh sách nhân viên</div>
                     <div class="panel-body">
                         <div class="scroll-bar">
-                            <div class="table-responsive" style="overflow-x: scroll;">
+                            <div class="table-responsive" style="overflow-x: scroll; height: 480px;">
                                 <table
                                         class="table table-striped table-bordered table-hover"
                                         id="dtVerticalScrollExample"

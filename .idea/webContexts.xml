@@ -8,6 +8,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/NhanVienMain.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/giamdoc/QuanLyNhanVien.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/giamdoc" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/nhanvien/nhanVienCapNhatThongTin.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/nhanvien" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/quanli/QuanLiChiNhanh.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/quanli" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/quanli/QuanLiNhanVien.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/quanli" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/truongphong/QuanLyNhanVien.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/truongphong" />
       </map>

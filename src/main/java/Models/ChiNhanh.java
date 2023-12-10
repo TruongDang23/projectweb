@@ -9,11 +9,11 @@ public class ChiNhanh {
     private String xa;
     private String huyen;
     private String tinh;
-    private Date ngayTaoChiNhanh;
+    private String ngayTaoChiNhanh;
     private String sdt;
     private String maGiamDoc;
 
-    public ChiNhanh(String maChiNhanh, String tenChiNhanh, String soNha, String xa, String huyen, String tinh, Date ngayTaoChiNhanh, String sdt, String maGiamDoc) {
+    public ChiNhanh(String maChiNhanh, String tenChiNhanh, String soNha, String xa, String huyen, String tinh, String ngayTaoChiNhanh, String sdt, String maGiamDoc) {
         this.maChiNhanh = maChiNhanh;
         this.tenChiNhanh = tenChiNhanh;
         this.soNha = soNha;
@@ -24,11 +24,11 @@ public class ChiNhanh {
         this.sdt = sdt;
         this.maGiamDoc = maGiamDoc;
     }
+    public ChiNhanh( String tenChiNhanhdt) {
 
-    public ChiNhanh(String tenChiNhanh) {
         this.tenChiNhanh = tenChiNhanh;
-    }
 
+    }
     public String getMaChiNhanh() {
         return maChiNhanh;
     }
@@ -53,7 +53,7 @@ public class ChiNhanh {
         return tinh;
     }
 
-    public Date getNgayTaoChiNhanh() {
+    public String getNgayTaoChiNhanh() {
         return ngayTaoChiNhanh;
     }
 
@@ -89,7 +89,7 @@ public class ChiNhanh {
         this.tinh = tinh;
     }
 
-    public void setNgayTaoChiNhanh(Date ngayTaoChiNhanh) {
+    public void setNgayTaoChiNhanh(String ngayTaoChiNhanh) {
         this.ngayTaoChiNhanh = ngayTaoChiNhanh;
     }
 

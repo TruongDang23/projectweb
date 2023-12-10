@@ -1,6 +1,12 @@
 <%-- Created by IntelliJ IDEA. User: GIGABYTE Date: 11/25/2023 Time: 7:48 AM To change this template use File | Settings
     | File Templates. --%>
+<%@ page import="Models.ChiNhanh" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="Models.ThongTinNguoiDung" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +36,23 @@
 </head>
 
 <body>
+<%
+    List<ThongTinNguoiDung> listInfo = (List<ThongTinNguoiDung>) request.getAttribute("ThongTinNguoiDung");
+    Gson gson = new Gson();
+    String json = gson.toJson(listInfo);
+%>
+<%
+    List<ChiNhanh> listInfoChiNhanh = (List<ChiNhanh>) request.getAttribute("ChiNhanh");
+    Gson gsonchinhanh = new Gson();
+    String jsonchinhanh = gson.toJson(listInfoChiNhanh);
+%>
+<script>
+    window.onload = function(){
+        let msg = "<%= request.getAttribute("Result")%>";
+        if(msg != "null")
+            alert(msg);
+    }
+</script>
 <script src="https://use.fontawesome.com/f59bcd8580.js"></script>
 <div id="wrapper">
     <aside id="sidebar-wrapper">
@@ -106,200 +129,97 @@
                     <div class="panel-heading">Danh sách chi nhánh</div>
                     <div class="panel-body">
                         <div class="scroll-bar">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style = "height: 480px;">
                                 <table class="table table-striped table-bordered table-hover"
-                                       id="dtVerticalScrollExample">
+                                       id="dtVerticalScrollExample"
+                                       onclick="DisplayInfo(event),DisplayInfoChiNhanh(event),ConfirmID(event)"
+
+
+                                >
+
                                     <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th style="min-width: 150px;">Mã Chi Nhánh </th>
+                                        <th style="min-width: 150px;">Tên Chi Nhánh</th>
+                                        <th style="min-width: 90px;">Số Nhà </th>
+                                        <th style="min-width: 100px;">Xã</th>
+                                        <th style="min-width: 160px;">Huyện</th>
+                                        <th style="min-width: 150px;">Tỉnh</th>
+                                        <th style="min-width: 150px;">Ngày tạo chi nhánh</th>
+                                        <th style="min-width: 150px;">Số điện thoại </th>
+                                        <th style="min-width: 150px;">Mã giám đốc</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">4</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.5</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 6</td>
-                                        <td>Win 98+</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 7</td>
-                                        <td>Win XP SP2+</td>
-                                        <td class="center">7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>AOL browser (AOL desktop)</td>
-                                        <td>Win XP</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.5</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 2.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 3.0</td>
-                                        <td>Win 2k+ / OSX.3+</td>
-                                        <td class="center">1.9</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.0</td>
-                                        <td>OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.5</td>
-                                        <td>OSX.3+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape 7.2</td>
-                                        <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Browser 8</td>
-                                        <td>Win 98SE+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Navigator 9</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.2</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.4</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.5</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.6</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.7</td>
-                                        <td>Win 98+ / OSX.1+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
+                                    <!--   for (Todo todo: todos) {  -->
+                                    <%!
+                                        private boolean json;
+                                    %><c:forEach var="info" items="${listChiNhanh}">
+                                        <tr>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.maChiNhanh}" />
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.tenChiNhanh}" />
+                                            </td>
+                                            <td style="min-width: 50px;">
+                                                <c:out value="${info.soNha}" />
+                                            </td>
+                                            <td style="min-width: 100px;">
+                                                <c:out value="${info.xa}" />
+                                            </td>
+                                            <td style="min-width: 160px;">
+                                                <c:out value="${info.huyen}" />
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.tinh}" />
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.ngayTaoChiNhanh}" />
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.sdt}" />
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.maGiamDoc}" />
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    <!-- } -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
-                    <div class="d-flex justify-content-around align-items-around">
-                        <select class="form-select w-25">
-                            <option selected>Chọn chi nhánh</option>
-                            <option value="1">Hà Nội</option>
-                            <option value="2">TP.HCM</option>
-                            <option value="3">Nha Trang</option>
-                        </select>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit">
-                            Tìm
-                        </button>
-                    </div>
+                <div class="panel-footer">
+                    <a href="<%=request.getContextPath()%>/listChiNhanh">Hiển thị danh sách</a>
                 </div>
+                <form action="<%=request.getContextPath()%>/findchinhanh" method="post">
+
+                    <div>
+                        <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
+                        <div class="d-flex justify-content-around align-items-around">
+                            <select class="form-select w-25 ms-3" name="tenCN" id="tenCN">
+                                <option selected>Chọn chi nhánh</option>
+                                <c:forEach var="listtenChiNhanh" items="${listtenChiNhanh}">
+                                    <option value="${listtenChiNhanh.tenChiNhanh}"><c:out value="${listtenChiNhanh.tenChiNhanh}" /></option>
+                                </c:forEach>
+                            </select>
+                            <div
+                                    class="d-flex mt-3 justify-content-around align-items-around"
+                            >
+
+                                <input class="form-control w-50" placeholder="Tìm kiếm" name="text_box_find" id="text_box_find" onkeyup = "Search()"/>
+                                <button type="submit" class="btn w-25 font-weight-bold btn-submit">
+                                    Tìm
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
                 <div>
                     <div class="panel-heading" style="font-weight: 600">
                         Tùy chọn chi nhánh
@@ -327,146 +247,118 @@
                     </div>
                     <div class="form-group ms-3 mb-3">
                         <label>ID:</label>
-                        <input class="form-control" placeholder="ID" value="GD001"/>
+                        <input id="MaNhanVien" class="form-control" placeholder="ID" disabled/>
                     </div>
                     <div class="form-group ms-3 mb-3">
                         <label>Họ và tên:</label>
-                        <input class="form-control" placeholder="Họ và tên" value="Lê Thành Vinh"/>
+                        <input id="HoVaTen" class="form-control" placeholder="Họ và tên" disabled/>
                     </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Ngày sinh:</label>
+                        <input
+                                type="date"
+                                class="form-control"
+                                id="NgaySinh"
+                                disabled
+                        />
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Giới tính:</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Giới tính"
+                                id="GioiTinh"
+                                disabled
+                        />
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Địa chỉ:</label>
+                        <input
+                                id="DiaChi"
+                                type="text"
+                                class="form-control"
+                                placeholder="Địa chỉ"
+                                disabled
+                        />
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Email:</label>
+                        <input
+                                id="Email"
+                                type="email"
+                                class="form-control"
+                                placeholder="Email"
+                                disabled
+                        />
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Số điện thoại:</label>
+                        <input
+                                id="SoDienThoai"
+                                type="text"
+                                class="form-control"
+                                placeholder="SĐT"
+                                disabled
+                        />
+                    </div>
+                    <div
+                            class="d-flex justify-content-between align-items-between"
+                    >
+                        <div class="form-group ms-3 mb-3">
+                            <label>Hệ số lương:</label>
+                            <input
+                                    id="HeSoLuong"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Hệ số"
+                                    disabled
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày vào làm:</label>
+                            <input
+                                    id="NgayVaoLam"
+                                    type="date"
+                                    class="form-control"
+                                    placeholder="05-01-2003"
+                                    disabled
+                            />
+                        </div>
+                    </div>
+                    <div
+                            class="d-flex justify-content-between align-items-between"
+                    >
+                        <div class="form-group ms-3 mb-3">
+                            <label>CCCD:</label>
+                            <input
+                                    id="CCCD"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="CCCD"
+                                    disabled
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Trạng thái:</label>
+                            <input
+                                    id="TrangThai"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Đang làm việc"
+                                    disabled
+                            />
+                        </div>
                 </div>
-                <div>
-                    <div class="panel-heading" style="font-weight: 600">
-                        Tùy chọn giám đốc
-                    </div>
-                    <div class="d-flex justify-content-around align-items-around">
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#ThemGiamDoc">
-                            Thêm
-                        </button>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#SuaGiamDoc">
-                            Sửa
-                        </button>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#XoaGiamDoc">
-                            Xóa
-                        </button>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
 </div>
 
-<!-- TODO: Edit Modal HTML -->
-<!-- ? Giám đốc -->
-<!-- Thêm giám đốc -->
-<div class="modal fade" id="ThemGiamDoc" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Thêm giám đốc</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form id="commonForm">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-giam-doc" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id-giam-doc" placeholder="ID"
-                               required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ten-giam-doc" class="col-form-label">Tên giám đốc:</label>
-                        <input type="text" class="form-control" id="ten-giam-doc"
-                               placeholder="Tên giám đốc"
-                               required/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                            data-bs-dismiss="modal">
-                        Đóng
-                    </button>
-                    <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Thêm
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Sửa giám đốc -->
-<div class="modal fade" id="SuaGiamDoc" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Sửa giám đốc</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form id="commonForm">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-giam-doc" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id-giam-doc" value="GD001"
-                               placeholder="ID" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ten-giam-doc" class="col-form-label">Tên giám đốc:</label>
-                        <input type="text" class="form-control" id="ten-giam-doc"
-                               value="Lê Thành Vinh"
-                               placeholder="Tên giám đốc" required/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                            data-bs-dismiss="modal">
-                        Đóng
-                    </button>
-                    <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Sửa
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Xóa giám đốc -->
-<div class="modal fade" id="XoaGiamDoc" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                    Bạn có muốn xóa giám đốc này!?
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p style="font-size: 16px">
-                    Bạn có chắc chắn muốn xóa giám đốc này không? Hành động này không
-                    thể hoàn tác.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                        data-bs-dismiss="modal">
-                    Đóng
-                </button>
-                <button type="button" class="btn w-25 font-weight-bold btn-danger">
-                    Xóa
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
 <!-- ? CHi nhánh -->
 <!-- THêm chi nhánh -->
 <div
@@ -489,15 +381,26 @@
                         aria-label="Close"
                 ></button>
             </div>
-            <form id="commonForm">
+            <form id="commonForm" action="<%=request.getContextPath()%>/addchinhanh" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
+                        <label for="ma-chi-nhanh" class="col-form-label">Mã chi nhánh : </label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="ma-chi-nhanh"
+                                placeholder="Mã chi nhánh"
+                                name="maChiNhanh"
+                                required
+                        />
                         <label for="ten-chi-nhanh" class="col-form-label">Tên: </label>
                         <input
                                 type="text"
                                 class="form-control"
                                 id="ten-chi-nhanh"
                                 placeholder="Tên chi nhánh"
+                                name="tenChiNhanh"
+
                                 required
                         />
                         <label for="SoNha" class="col-form-label">Số nhà:</label>
@@ -506,6 +409,7 @@
                                 class="form-control"
                                 id="SoNha"
                                 placeholder="Số nhà"
+                                name="soNha"
                                 required
                         />
                         <label for="Xa" class="col-form-label">Xã:</label>
@@ -514,6 +418,7 @@
                                 class="form-control"
                                 id="Xa"
                                 placeholder="Xã"
+                                name="xa"
                                 required
                         />
                         <label for="Huyen" class="col-form-label">Huyện:</label>
@@ -522,6 +427,7 @@
                                 class="form-control"
                                 id="Huyen"
                                 placeholder="Huyện"
+                                name="huyen"
                                 required
                         />
                         <label for="Tinh" class="col-form-label">Tỉnh:</label>
@@ -530,6 +436,7 @@
                                 class="form-control"
                                 id="Tinh"
                                 placeholder="Tỉnh"
+                                name="tinh"
                                 required
                         />
                         <label for="NgayTao" class="col-form-label"
@@ -540,6 +447,7 @@
                                 class="form-control"
                                 id="NgayTao"
                                 placeholder="Ngày tạo chi nhánh"
+                                name="ngayTaoChiNhanh"
                                 required
                         />
                         <label for="SDT" class="col-form-label">Số điện thoại</label>
@@ -548,6 +456,16 @@
                                 class="form-control"
                                 id="SDT"
                                 placeholder="Số điện thoại"
+                                name="sdt"
+                                required
+                        />
+                        <label for="maGiamDoc" class="col-form-label">Mã giám đốc</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="maGiamDoc"
+                                placeholder="Mã giám đốc"
+                                name="maGiamDoc"
                                 required
                         />
                     </div>
@@ -592,72 +510,89 @@
                         aria-label="Close"
                 ></button>
             </div>
-            <form id="commonForm">
+            <form id="commonForm" action="<%= request.getContextPath()%>/updatechinhanh" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="ten-chi-nhanh" class="col-form-label">Tên: </label>
+                        <label  class="col-form-label">Mã chi nhánh: </label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="ten-chi-nhanh"
+                                id="updatemaChiNhanh"
+                                name="maChiNhanh"
+                                placeholder="Mã chi nhánh"
+                                required
+                        />
+                        <label  class="col-form-label">Tên: </label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="updatetenChiNhanh"
+                                name="tenChiNhanh"
                                 placeholder="Tên chi nhánh"
-                                value="Chi nhánh 1"
                                 required
                         />
-                        <label for="SoNha" class="col-form-label">Số nhà:</label>
+                        <label  class="col-form-label">Số nhà:</label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="SoNha"
+                                id="updatesoNha"
+                                name="soNha"
                                 placeholder="Số nhà"
-                                value="123"
                                 required
                         />
-                        <label for="Xa" class="col-form-label">Xã:</label>
+                        <label  class="col-form-label">Xã:</label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="Xa"
                                 placeholder="Xã"
-                                value="Nguyễn Thái Học"
+                                id="updatexa"
+                                name="xa"
                                 required
                         />
-                        <label for="Huyen" class="col-form-label">Huyện:</label>
+                        <label  class="col-form-label">Huyện:</label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="Huyen"
+                                id="updatehuyen"
+                                name="huyen"
                                 placeholder="Huyện"
-                                value="Ba Đình"
                                 required
                         />
-                        <label for="Tinh" class="col-form-label">Tỉnh:</label>
+                        <label  class="col-form-label">Tỉnh:</label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="Tinh"
+                                id="updatetinh"
+                                name="tinh"
                                 placeholder="Tỉnh"
-                                value="Hà Nội"
                                 required
                         />
-                        <label for="NgayTao" class="col-form-label"
-                        >Ngày tạo chi nhánh</label
+                        <label  class="col-form-label">Ngày tạo chi nhánh</label
                         >
                         <input
                                 type="date"
                                 class="form-control"
-                                id="NgayTao"
+                                id="updatengayTaoChiNhanh"
+                                name="ngayTaoChiNhanh"
                                 placeholder="mm/dd/yyyy"
-                                value="2021-07-01"
                                 required
                         />
-                        <label for="SDT" class="col-form-label">Số điện thoại</label>
+                        <label  class="col-form-label">Số điện thoại</label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="SDT"
+                                id="updatesdt"
+                                name="sdt"
                                 placeholder="Số điện thoại"
-                                value="0123456789"
+                                required
+                        />
+                        <label   class="col-form-label">Mã giám đốc</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="updatemagiamdoc"
+                                name="maGiamDoc"
+                                placeholder="Mã giám đốc"
                                 required
                         />
                     </div>
@@ -694,25 +629,127 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p style="font-size: 16px">
-                    Bạn có chắc chắn muốn xóa chi nhánh này không? Hành động này không
-                    thể hoàn tác.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                        data-bs-dismiss="modal">
-                    Đóng
-                </button>
-                <button type="button submit" class="btn w-25 font-weight-bold btn-danger">
-                    Xóa
-                </button>
-            </div>
+            <form action="<%=request.getContextPath()%>/deletechinhanh" method="post">
+                <div class="modal-body">
+                    <p style="font-size: 16px" id = "ConfirmID">
+                    </p>
+                    <input  name="xoamaChiNhanh" id="xoamaChiNhanh" type="hidden" required/>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
+                            data-bs-dismiss="modal">
+                        Đóng
+                    </button>
+                    <button type="button submit" class="btn w-25 font-weight-bold btn-danger">
+                        Xóa
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/js/quanli.js"></script>
+<script>
+
+    function Search() {
+        var searchValue = document.getElementById('text_box_find').value;
+
+        var searchTable = document.getElementById('dtVerticalScrollExample');
+        var searchColCount;
+
+        for (var rowIndex = 0; rowIndex < searchTable.rows.length; rowIndex++) {
+            var rowData = '';
+
+            if (rowIndex == 0) {
+                searchColCount = searchTable.rows.item(rowIndex).cells.length;
+                continue;
+            }
+
+            for (var colIndex = 0; colIndex < searchColCount; colIndex++) {
+                rowData += searchTable.rows.item(rowIndex).cells.item(colIndex).textContent;
+            }
+
+            if (rowData.indexOf(searchValue) == -1)
+                searchTable.rows.item(rowIndex).style.display = 'none';
+            else
+                searchTable.rows.item(rowIndex).style.display = 'table-row';
+        }
+    }
+
+    function DisplayInfo(e) {
+        let list = <%= json%>;
+        let row = e.target.parentNode;
+        let magiamdoc = row.cells[8].innerHTML;
+        document.getElementById("MaNhanVien").value = magiamdoc;
+        ClearSpaces("MaNhanVien");
+
+        for (var i = 0; i < list.length; i++) {
+            let emp = list[i];
+            if(emp.mataikhoan == document.getElementById("MaNhanVien").value)
+            {
+
+                document.getElementById("MaNhanVien").value = emp.mataikhoan;
+                document.getElementById("HoVaTen").value = emp.hoTen;
+                document.getElementById("NgaySinh").value = emp.ngaySinh;
+                document.getElementById("GioiTinh").value = emp.gioitinh;
+                document.getElementById("DiaChi").value = emp.soNha + ", " + emp.xa + ", " + emp.huyen + ", " + emp.tinh;
+                document.getElementById("Email").value = emp.email;
+                document.getElementById("SoDienThoai").value = emp.sdt;
+                document.getElementById("HeSoLuong").value = emp.heSoLuong;
+                document.getElementById("NgayVaoLam").value = emp.ngayBatDauLam;
+                document.getElementById("CCCD").value = emp.cccd;
+                document.getElementById("TrangThai").value = emp.trangThai;
+            }
+
+        }
+
+    }
+    function DisplayInfoChiNhanh(e) {
+        let list = <%= jsonchinhanh%>;
+        let row = e.target.parentNode;
+        let machinhanh = row.cells[0].innerHTML;
+        document.getElementById("updatemaChiNhanh").value = machinhanh;
+        ClearSpaces("updatemaChiNhanh");
+
+        for (var i = 0; i < list.length; i++) {
+            let emp = list[i];
+
+            if(emp.maChiNhanh == document.getElementById("updatemaChiNhanh").value)
+            {
+                document.getElementById("updatemaChiNhanh").value = emp.maChiNhanh;
+                document.getElementById("updatetenChiNhanh").value = emp.tenChiNhanh;
+                document.getElementById("updatesoNha").value = emp.soNha;
+                document.getElementById("updatexa").value = emp.xa;
+                document.getElementById("updatehuyen").value = emp.huyen;
+                document.getElementById("updatetinh").value = emp.tinh;
+                document.getElementById("updatesdt").value = emp.sdt;
+                document.getElementById("updatemagiamdoc").value = emp.maGiamDoc;
+            }
+
+        }
+
+    }
+    function ClearSpaces(id){
+        var value = document.getElementById(id).value; // get the value of the input element
+        var newValue = value.replace(/\s+/g, ""); // replace all whitespace characters with an empty string
+        document.getElementById(id).value = newValue; // set the new value of the input element
+    }
+
+    function ConfirmID(e){
+        let row = e.target.parentNode;
+        let maChiNhanh = row.cells[0].innerHTML
+        ClearSpaces("updatemaChiNhanh");
+
+        document.getElementById("xoamaChiNhanh").value = maChiNhanh;
+        ClearSpaces("xoamaChiNhanh");
+        if(maChiNhanh != null)
+            document.getElementById("ConfirmID").innerHTML = "Bạn có chắc chắn muốn xóa chi nhánh "+maChiNhanh+" không? Hành động này không thể hoàn tác.";
+        else
+            document.getElementById("ConfirmID").innerHTML = "Hãy chọn một chi nhánh trước khi thực hiện thao tác này."
+    }
+</script>
 </body>
 
 </html>

@@ -125,7 +125,7 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <p class="p-1">Quên mật khẩu?</p>
-                        <a class="p-1" href="./forgotPass.jsp">Đặt lại mật khẩu</a>
+                        <a class="p-1" href="<%=request.getContextPath()%>/views/system/forgotPass.jsp">Đặt lại mật khẩu</a>
                     </div>
                 </form>
             </div>

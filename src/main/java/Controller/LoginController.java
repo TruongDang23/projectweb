@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-
 @WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet"})
 public class LoginController extends HttpServlet
 {
@@ -36,7 +35,6 @@ public class LoginController extends HttpServlet
         user = context.getInitParameter("user");
         pass = context.getInitParameter("pass");
         loginDAO = new LoginDAO();
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,10 +54,6 @@ public class LoginController extends HttpServlet
                 authenticate(request, response);
                 break;
         }
-
-
-
-
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
@@ -117,15 +111,10 @@ public class LoginController extends HttpServlet
                 RequestDispatcher dispatcher = request.getRequestDispatcher("views/system/forgotPass.jsp");
                 dispatcher.forward(request, response);
             }
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
-
-
 }
 
 

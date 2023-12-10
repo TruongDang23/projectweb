@@ -63,6 +63,7 @@ public class LoginDAO
         properties.put("mail.smtp.port", port);
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         // creates a new session with an authenticator
         Authenticator auth = new Authenticator() {

@@ -470,7 +470,7 @@
                         aria-label="Close"
                 ></button>
             </div>
-            <form id="commonForm" action="<%=request.getContextPath()%>/addemployee" method="post">
+            <form action="<%=request.getContextPath()%>/addemployee" method="post">
                 <div class="modal-body">
                     <div class="form-group ms-3 mb-3">
                         <label>Mã nhân viên:</label>

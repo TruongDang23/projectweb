@@ -16,12 +16,13 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-@WebServlet(name = "QuanLyPhongBanController", urlPatterns = {"/listphongban", "/findphongban"})
+@WebServlet(name = "QuanLyPhongBanController", urlPatterns = {"/listphongban", "/findphongban", "/addphongban"})
 public class QuanLyPhongBanController extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
   private QuanLyPhongBanDAO quanLyPhongBanDAO = null;
-  private List <ThongTinTruongPhong> listPhongBanInfo;
+  private List<ThongTinTruongPhong> listPhongBanInfo;
+
   public void init() {
     quanLyPhongBanDAO = new QuanLyPhongBanDAO();
   }
@@ -37,6 +38,9 @@ public class QuanLyPhongBanController extends HttpServlet {
           break;
         case "/findphongban":
           findEmployee(request, response);
+          break;
+        case "/addphongban":
+          AddPhongBan(request, response);
           break;
         default:
           break;
@@ -58,9 +62,9 @@ public class QuanLyPhongBanController extends HttpServlet {
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
 
-    if(login == null)
+    if (login == null) {
       response.sendRedirect("views/system/login.jsp");
-    else {
+    } else {
       String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());
       String maPhongBan = quanLyPhongBanDAO.LayMaPhongBan(login.getMaTaiKhoan());
 
@@ -69,19 +73,65 @@ public class QuanLyPhongBanController extends HttpServlet {
       listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
       request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
 
-      if (login.getQuyen().equals("admin"))
-      {
+      if (login.getQuyen().equals("admin")) {
         request.setAttribute("listTruongPhong", listTruongPhong);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiPhongBan.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+            "views/quanli/QuanLiPhongBan.jsp");
         dispatcher.forward(request, response);
-      }
-      else if (login.getQuyen().equals("giamdoc")) {
+      } else if (login.getQuyen().equals("giamdoc")) {
         request.setAttribute("listTruongPhong", listTruongPhong);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/QuanLyPhongBan.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+            "views/giamdoc/QuanLyPhongBan.jsp");
         dispatcher.forward(request, response);
       }
     }
   }
+  private void AddPhongBan(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException, IOException, ServletException, ParseException {
+    HttpSession session = request.getSession();
+    TaiKhoan login = new TaiKhoan();
+    login = (TaiKhoan) session.getAttribute("user");
+
+    if (login == null) {
+      response.sendRedirect("views/system/login.jsp");
+    }
+    else
+    {
+      String maChiNhanh = request.getParameter("MaChiNhanh");
+      String maPhongBan = request.getParameter("MaPhongBan");
+      String tenPhongBan = request.getParameter("TenPhongBan");
+      String ngayTao = request.getParameter("NgayTao");
+      String sdt = request.getParameter("SDT");
+      String maChucVu = request.getParameter("MaChucVu");
+      String tenChucVu = request.getParameter("TenChucVu");
+      String luongCoBan = request.getParameter("LuongCoBan");
+      String maTruongPhong = request.getParameter("MaTruongPhong");
+      String ngayBatDau = request.getParameter("NgayBatDau");
+
+      tenPhongBan = ConvertToUTF8(tenPhongBan);
+      tenChucVu = ConvertToUTF8(tenChucVu);
+      int luong = Integer.parseInt(luongCoBan);
+
+      if (quanLyPhongBanDAO.AddPhongBan(maChiNhanh, maPhongBan, tenPhongBan, ngayTao, sdt, maChucVu, tenChucVu, luong, maTruongPhong, ngayBatDau))
+      {
+        request.setAttribute("Result","Thêm Phòng Ban thành công");
+      }
+      else
+      {
+        request.setAttribute("Result","Thêm Phòng Ban thất bại");
+      }
+      if (login.getQuyen().equals("admin")) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+            "views/quanli/QuanLiPhongBan.jsp");
+        dispatcher.forward(request, response);
+      } else if (login.getQuyen().equals("giamdoc")) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+            "views/giamdoc/QuanLyPhongBan.jsp");
+        dispatcher.forward(request, response);
+      }
+    }
+  }
+
   private void findEmployee(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, IOException, ServletException, ParseException {
 //    String maChiNhanh = request.getParameter("maChiNhanh");
@@ -95,6 +145,14 @@ public class QuanLyPhongBanController extends HttpServlet {
 //    request.setAttribute("listNhanVien", listNhanVien);
 //    RequestDispatcher dispatcher = request.getRequestDispatcher("listphongban.jsp");
 //    dispatcher.forward(request, response);
+  }
+  private String ConvertToUTF8(String item)
+  {
+    String result;
+    byte[] bytes = item.getBytes(StandardCharsets.ISO_8859_1);
+    result = new String(bytes, StandardCharsets.UTF_8);
+
+    return result;
   }
 
 }

@@ -254,25 +254,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form>
+            <form action="<%=request.getContextPath()%>/addphongban" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="col-form-label">Mã chi nhánh:
                         </label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control" name="MaChiNhanh"
                                placeholder="Mã chi nhánh" required/>
                     </div>
                     <div class="d-flex mb-2 justify-content-between">
                         <div>
                             <label class="col-form-label">Mã phòng ban:
                             </label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="MaPhongBan"
                                    placeholder="Mã phòng ban" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Tên phòng ban:
                             </label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="TenPhongBan"
                                    placeholder="Tên phòng ban" required/>
                         </div>
                     </div>
@@ -280,49 +280,49 @@
                         <div>
                             <label class="col-form-label">Ngày tạo:
                             </label>
-                            <input type="date" class="form-control"
+                            <input type="date" class="form-control" name="NgayTao"
                                    placeholder="Ngày tạo" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Số điện thoại:
                             </label>
-                            <input type="number" class="form-control"
-                                   placeholder="Tên phòng ban" required/>
+                            <input type="number" class="form-control" name="SDT"
+                                   placeholder="Số điện thoại" required/>
                         </div>
                     </div>
                     <div class="d-flex mb-2 justify-content-between">
                         <div>
                             <label class="col-form-label">Mã chức vụ:
                             </label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="MaChucVu"
                                    placeholder="Mã chức vụ" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Tên chức vụ:
                             </label>
-                            <input type="text" class="form-control"
-                                   placeholder="Tên phòng ban" required/>
+                            <input type="text" class="form-control" name="TenChucVu"
+                                   placeholder="Tên chức vụ" required/>
                         </div>
                     </div>
                     <div class="d-flex mb-2 justify-content-between">
                         <div>
                             <label class="col-form-label">Lương cơ bản:
                             </label>
-                            <input type="number" class="form-control"
-                                   placeholder="Ngày tạo" required/>
+                            <input type="number" class="form-control" name="LuongCoBan"
+                                   placeholder="Lương cơ bản" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Mã trưởng phòng:
                             </label>
-                            <input type="number" class="form-control"
-                                   placeholder="Tên phòng ban" required/>
+                            <input type="text" class="form-control" name="MaTruongPhong"
+                                   placeholder="Mã trưởng phòng" required/>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Ngày bắt đầu:
                         </label>
-                        <input type="date" class="form-control"
-                               placeholder="Ngày tạo" required/>
+                        <input type="date" class="form-control" name="NgayBatDau"
+                               placeholder="Ngày bắt đầu" required/>
                     </div>
                 </div>
                 <div class="modal-footer">

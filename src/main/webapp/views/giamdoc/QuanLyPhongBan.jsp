@@ -349,28 +349,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form>
+            <form action="<%=request.getContextPath()%>/suaPhongBan" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="col-form-label">Mã chi nhánh:
                         </label>
-                        <input type="text" class="form-control" name="MaChiNhanh"
-                               id="UpdateMaChiNhanh" disabled
+                        <input type="text" class="form-control" name="SuaMaChiNhanh"
+                               id="SuaMaChiNhanh"
                                placeholder="Mã chi nhánh" required/>
                     </div>
                     <div class="d-flex mb-2 justify-content-between">
                         <div>
                             <label class="col-form-label">Mã phòng ban:
                             </label>
-                            <input type="text" class="form-control" name="MaPhongBan"
-                                   id="UpdateMaPhongBan" disabled
+                            <input type="text" class="form-control" name="SuaMaPhongBan"
+                                   id="SuaMaPhongBan"
                                    placeholder="Mã phòng ban" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Tên phòng ban:
                             </label>
-                            <input type="text" class="form-control" name="TenPhongBan"
-                                   id="UpdateTenPhongBan"
+                            <input type="text" class="form-control" name="SuaTenPhongBan"
+                                   id="SuatenPhongBan"
                                    placeholder="Tên phòng ban" required/>
                         </div>
                     </div>
@@ -378,35 +378,47 @@
                         <div>
                             <label class="col-form-label">Ngày tạo:
                             </label>
-                            <input type="date" class="form-control" name="NgayTao"
-                                   id="UpdateNgayTao"
+                            <input type="date" class="form-control" name="SuaNgayTao"
+                                   id="SuangayTao"
                                    placeholder="Ngày tạo" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Số điện thoại:
                             </label>
-                            <input type="number" class="form-control" name="SDT" id="UpdateSDT"
-                                   placeholder="Tên phòng ban" required/>
+                            <input type="number" class="form-control" name="SuaSDT" id="SuaSDT"
+                                   placeholder="Số điện thoại" required/>
                         </div>
                     </div>
                     <div class="d-flex mb-2 justify-content-between">
                         <div>
                             <label class="col-form-label">Mã chức vụ:
                             </label>
-                            <input type="text" class="form-control" name="MaChucVu"
-                                   id="UpdateMaChucVu"
+                            <input type="text" class="form-control" name="SuaMaChucVu"
+                                   id="SuaMaChucVu"
                                    placeholder="Mã chức vụ" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Lương cơ bản:
+                            </label>
+                            <input type="number" class="form-control" name="SuaLuongCoBan"
+                                   placeholder="Lương cơ bản" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Mã trưởng phòng:
                             </label>
-                            <input type="text" class="form-control" name="MaTruongPhong"
-                                   id="UpdateMaTruongPhong"
-                                   placeholder="Tên phòng ban" required/>
+                            <input type="text" class="form-control" name="SuaMaTruongPhong"
+                                   id="SuaMaTruongPhong"
+                                   placeholder="Mã trưởng phòng" required/>
                         </div>
                     </div>
-
-
+                    <div class="mb-3">
+                        <label class="col-form-label">Ngày bắt đầu:
+                        </label>
+                        <input type="date" class="form-control" name="SuaNgayBatDau"
+                               placeholder="Ngày bắt đầu" required/>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn w-25 font-weight-bold btn-warning"
@@ -414,7 +426,7 @@
                         Đóng
                     </button>
                     <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Thêm
+                        Sửa
                     </button>
                 </div>
             </form>
@@ -502,13 +514,13 @@
         document.getElementById('idtruongphong').value = emp.maNhanVien;
         document.getElementById('tentruongphong').value = emp.hoTen;
 
-        document.getElementById('UpdateMaChiNhanh').value = emp.maChiNhanh;
-        document.getElementById('UpdateMaPhongBan').value = emp.maPB;
-        document.getElementById('UpdateTenPhongBan').value = emp.tenPB;
-        document.getElementById('UpdateNgayTao').value = emp.ngayTao;
-        document.getElementById('UpdateSDT').value = emp.sdt;
-        document.getElementById('UpdateMaChucVu').value = emp.maChucVu;
-        document.getElementById('UpdateMaTruongPhong').value = emp.maNhanVien;
+        document.getElementById('SuaMaChiNhanh').value = emp.maChiNhanh;
+        document.getElementById('SuaMaPhongBan').value = emp.maPB;
+        document.getElementById('SuaTenPhongBan').value = emp.tenPB;
+        document.getElementById('SuaNgayTao').value = emp.ngayTao;
+        document.getElementById('SuaSDT').value = emp.sdt;
+        document.getElementById('SuaMaChucVu').value = emp.maChucVu;
+        document.getElementById('SuaMaTruongPhong').value = emp.maNhanVien;
 
         document.getElementById('XoaMaPhongBan').value = emp.maPB;
         break;

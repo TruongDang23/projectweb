@@ -17,7 +17,7 @@ public class QuanLyPhongBanDAO {
   private static final String SELECT_PHONGBAN_ALL = "SELECT * FROM thongtintruongphong;";
   private static final String SELECT_PHONGBAN_NHANH = "SELECT * FROM thongtintruongphong WHERE MaChiNhanh = ?;";
   private static final String CALL_INSERT_PHONGBAN = "CALL themPhongBan(?, ?, ?, ?, ?, ?, ?, ?,?,?);";
-  private static final String CALL_UPDATE_PHONGBAN = "CALL updatePhongBan(?, ?, ?, ?, ?, ?, ?, ?,?,?);";
+  private static final String CALL_UPDATE_PHONGBAN = "CALL suaPhongBan(?, ?, ?, ?, ?, ?, ?, ?,?);";
   private static final String CALL_DELETE_PHONGBAN = "CALL xoaPhongBan(?);";
   public QuanLyPhongBanDAO() {
   }
@@ -186,6 +186,31 @@ public class QuanLyPhongBanDAO {
       return false;
     }
   }
+  public boolean SuaPhongBan(String maChiNhanh, String maPB, String tenPB, String ngayTao,
+      String sdt, String maChucVu, int luongCoBan, String maTruongPhong, String ngayBatDau) {
+    try (Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(CALL_UPDATE_PHONGBAN);) {
+      preparedStatement.setString(1, maChiNhanh);
+      preparedStatement.setString(2, maPB);
+      preparedStatement.setString(3, tenPB);
+      preparedStatement.setString(4, ngayTao);
+      preparedStatement.setString(5, sdt);
+      preparedStatement.setString(6, maChucVu);
+      preparedStatement.setInt(7, luongCoBan);
+      preparedStatement.setString(8, maTruongPhong);
+      preparedStatement.setString(9, ngayBatDau);
+
+      if (preparedStatement.executeUpdate() > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (SQLException e) {
+      HandleException.printSQLException(e);
+      return false;
+    }
+  }
+
   public boolean XoaPhongBan(String maPhongBan) {
     try (Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(CALL_DELETE_PHONGBAN);) {

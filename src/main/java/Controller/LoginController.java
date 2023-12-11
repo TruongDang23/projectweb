@@ -1,7 +1,6 @@
 package Controller;
 
 import DAO.LoginDAO;
-import JDBCUtils.HandleException;
 import Models.TaiKhoan;
 import java.io.IOException;
 import javax.mail.MessagingException;
@@ -13,10 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet"})
 public class LoginController extends HttpServlet
@@ -27,6 +22,7 @@ public class LoginController extends HttpServlet
     private String pass;
     private static final long serialVersionUID = 1L;
     private LoginDAO loginDAO=null;
+
     public void init()
     {
         ServletContext context = getServletContext();
@@ -102,7 +98,7 @@ public class LoginController extends HttpServlet
         try
         {
             String mk=LoginDAO.LayMatKhau(tendangnhap,email);
-            if(mk!= "") {
+            if(mk != "") {
                 LoginDAO.sendEmail(host, port, user, pass, email, tendangnhap);
                 response.sendRedirect("views/system/login.jsp");
             }

@@ -34,6 +34,13 @@
 </head>
 <body>
     <script src="https://use.fontawesome.com/f59bcd8580.js"></script>
+    <script>
+        window.onload = function () {
+            let msg = "<%= request.getAttribute("Result")%>";
+            if (msg != "null")
+                alert(msg);
+        }
+    </script>
     <div id="wrapper">
         <aside id="sidebar-wrapper">
             <div class="sidebar-brand mb-5">
@@ -99,7 +106,7 @@
                             <div class="col-lg-9">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                        <form>
+                                        <form action="<%=request.getContextPath()%>/sendemail" method="post">
                                             <div class="row g-3">
                                                 <div class="col-md-12">
                                                     <label for="received-email" class="form-label"

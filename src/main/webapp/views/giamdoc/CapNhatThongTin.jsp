@@ -69,8 +69,8 @@
             </li>
             <li>
                 <a class="mb-3"
-                   href="<%=request.getContextPath()%>/views/giamdoc/QuanLyPhongBan.jsp"><i
-                        class="fa fa-sitemap"></i>Quảnlý phòng ban</a>
+                   href="<%=request.getContextPath()%>/listphongban"><i
+                        class="fa fa-sitemap"></i>Quản lý phòng ban</a>
             </li>
             <li>
                 <a class="mb-3" href="<%=request.getContextPath()%>/listemployee"><i

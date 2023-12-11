@@ -80,7 +80,7 @@
             </li>
 
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/views/truongphong/CapNhatThongTin.jsp"
+                <a class="mt-3" href="<%=request.getContextPath()%>/infoEmployee"
                 ><i class="fa fa-drivers-license"></i>Cập nhật thông tin</a
                 >
             </li>

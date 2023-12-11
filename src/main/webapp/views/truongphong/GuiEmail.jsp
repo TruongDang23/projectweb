@@ -42,7 +42,7 @@
                             <a class="mb-3" href="<%=request.getContextPath()%>/xemcautruc"><i class="fa fa-building-o"></i>Cấu trúc công ty</a>
                         </li>
                         <li>
-                            <a class="mb-3" href="<%=request.getContextPath()%>/views/truongphong/CapNhatThongTin.jsp"><i class="fa fa-drivers-license"></i>Cập nhật
+                            <a class="mb-3" href="<%=request.getContextPath()%>/infoEmployee"><i class="fa fa-drivers-license"></i>Cập nhật
                                 thông tin</a>
                         </li>
                         <li class="active">

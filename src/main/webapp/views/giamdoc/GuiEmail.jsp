@@ -42,14 +42,14 @@
                             <a class="mb-3" href="<%=request.getContextPath()%>/xemcautruc"><i class="fa fa-building-o"></i>Cấu trúc công ty</a>
                         </li>
                         <li>
-                            <a class="mb-3" href="<%=request.getContextPath()%>/views/giamdoc/CapNhatThongTin.jsp"><i class="fa fa-drivers-license"></i>Cập nhật
+                            <a class="mb-3" href="<%=request.getContextPath()%>/infoEmployee"><i class="fa fa-drivers-license"></i>Cập nhật
                                 thông tin</a>
                         </li>
                         <li class="active">
                             <a class="mb-3" href="<%=request.getContextPath()%>/views/giamdoc/GuiEmail.jsp"><i class="fa fa-commenting-o"></i>Gửi mail</a>
                         </li>
                         <li>
-                            <a class="mb-3" href="<%=request.getContextPath()%>/views/giamdoc/QuanLyPhongBan.jsp"><i class="fa fa-sitemap"></i>Quản lý phòng
+                            <a class="mb-3" href="<%=request.getContextPath()%>/listphongban"><i class="fa fa-sitemap"></i>Quản lý phòng
                                 ban</a>
                         </li>
                         <li>

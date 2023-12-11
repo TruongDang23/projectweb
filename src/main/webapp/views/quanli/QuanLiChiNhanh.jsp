@@ -65,7 +65,7 @@
                 <a href="<%=request.getContextPath()%>/xemcautruc"><i class="fa fa-building-o"></i>Cấu trúc công ty</a>
             </li>
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiCapNhatThongTin.jsp"><i
+                <a class="mt-3" href="<%=request.getContextPath()%>/infoEmployee"><i
                         class="fa fa-drivers-license"></i>Cập nhật thông tin</a>
             </li>
             <li>
@@ -79,7 +79,7 @@
             </li>
 
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiPhongBan.jsp"><i class="fa fa-sitemap"></i>Quản lý
+                <a class="mt-3" href="<%=request.getContextPath()%>/listphongban"><i class="fa fa-sitemap"></i>Quản lý
                     phòng
                     ban</a>
             </li>

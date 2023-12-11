@@ -76,7 +76,7 @@
 
             <li>
                 <a class="mt-3"
-                   href="<%=request.getContextPath()%>/views/quanli/QuanLiPhongBan.jsp"><i
+                   href="<%=request.getContextPath()%>/listphongban"><i
                         class="fa fa-sitemap"></i>Quản lý phòng
                     ban</a>
             </li>

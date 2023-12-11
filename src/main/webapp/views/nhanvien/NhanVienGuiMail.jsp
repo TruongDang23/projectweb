@@ -43,7 +43,7 @@
                                 ty</a>
                         </li>
                         <li>
-                            <a class="mb-3" href="<%=request.getContextPath()%>/views/nhanvien/NhanVienCapNhatThongTin.jsp"><i class="fa fa-drivers-license"></i>Cập
+                            <a class="mb-3" href="<%=request.getContextPath()%>/infoEmployee"><i class="fa fa-drivers-license"></i>Cập
                                 nhật thông tin</a>
                         </li>
                         <li class="active">

@@ -16,6 +16,7 @@ public class QuanLyPhongBanDAO {
 
   private static final String SELECT_PHONGBAN_ALL = "SELECT * FROM thongtintruongphong;";
   private static final String SELECT_PHONGBAN_NHANH = "SELECT * FROM thongtintruongphong WHERE MaChiNhanh = ?;";
+  private static final String CALL_INSERT_PHONGBAN = "CALL themPhongBan(?, ?, ?, ?, ?, ?, ?, ?,?,?);";
 
   public QuanLyPhongBanDAO() {
   }
@@ -161,22 +162,49 @@ public class QuanLyPhongBanDAO {
     return result;
   }
 
+  public boolean AddPhongBan(String maChiNhanh, String maPB, String tenPB, String ngayTao,
+      String sdt, String maChucVu, String tenChucVu, int luongCoBan, String maTruongPhong,
+      String ngayBatDau) {
+    try (Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(CALL_INSERT_PHONGBAN);) {
+      preparedStatement.setString(1, maChiNhanh);
+      preparedStatement.setString(2, maPB);
+      preparedStatement.setString(3, tenPB);
+      preparedStatement.setString(4, ngayTao);
+      preparedStatement.setString(5, sdt);
+      preparedStatement.setString(6, maChucVu);
+      preparedStatement.setString(7, tenChucVu);
+      preparedStatement.setInt(8, luongCoBan);
+      preparedStatement.setString(9, maTruongPhong);
+      preparedStatement.setString(10, ngayBatDau);
+
+      preparedStatement.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      HandleException.printSQLException(e);
+      return false;
+    }
+  }
+
   public static void main(String[] args) {
     QuanLyPhongBanDAO quanLyPhongBanDAO = new QuanLyPhongBanDAO();
     String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh("TK006");
     String maPhongBan = quanLyPhongBanDAO.LayMaPhongBan("TK006");
-    List<ThongTinTruongPhong> result = quanLyPhongBanDAO.selectAllPhongBan(maChiNhanh, maPhongBan,
-        "giamdoc");
-    for (ThongTinTruongPhong thongTinPhongBan : result) {
-      System.out.println(thongTinPhongBan.getMaChiNhanh());
-      System.out.println(thongTinPhongBan.getTenChiNhanh());
-      System.out.println(thongTinPhongBan.getMaPB());
-      System.out.println(thongTinPhongBan.getTenPB());
-      System.out.println(thongTinPhongBan.getNgayTao());
-      System.out.println(thongTinPhongBan.getSdt());
-      System.out.println(thongTinPhongBan.getMaChucVu());
-      System.out.println(thongTinPhongBan.getMaNhanVien());
-      System.out.println(thongTinPhongBan.getHoTen());
-    }
+//    List<ThongTinTruongPhong> result = quanLyPhongBanDAO.selectAllPhongBan(maChiNhanh, maPhongBan,
+//        "giamdoc");
+//    for (ThongTinTruongPhong thongTinPhongBan : result) {
+//      System.out.println(thongTinPhongBan.getMaChiNhanh());
+//      System.out.println(thongTinPhongBan.getTenChiNhanh());
+//      System.out.println(thongTinPhongBan.getMaPB());
+//      System.out.println(thongTinPhongBan.getTenPB());
+//      System.out.println(thongTinPhongBan.getNgayTao());
+//      System.out.println(thongTinPhongBan.getSdt());
+//      System.out.println(thongTinPhongBan.getMaChucVu());
+//      System.out.println(thongTinPhongBan.getMaNhanVien());
+//      System.out.println(thongTinPhongBan.getHoTen());
+//    }
+    boolean result = quanLyPhongBanDAO.AddPhongBan("CN101", "PB101", "Test",
+        "2023-12-06", "9844037288", "CV101", "Phong Ki Thuat", 10000000, "NV101", "2023-12-06");
+    System.out.println(result);
   }
 }

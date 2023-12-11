@@ -70,7 +70,7 @@
                         </div>
                         <div class="navbar-text">
                             <h3>Xin chào giám đốc</h3>
-                            <a href="<%=request.getContextPath()%>"><i class="fa fa-sign-out icon-size"></i></a>
+                            <a href="<%=request.getContextPath()%>/logout"><i class="fa fa-sign-out icon-size"></i></a>
                         </div>
                     </div>
                 </div>

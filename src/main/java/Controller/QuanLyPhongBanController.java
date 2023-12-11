@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.QuanLyNhanVienDAO;
 import DAO.QuanLyPhongBanDAO;
 import JDBCUtils.HandleException;
 import Models.*;
@@ -22,9 +23,11 @@ public class QuanLyPhongBanController extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
   private QuanLyPhongBanDAO quanLyPhongBanDAO = null;
+  private QuanLyNhanVienDAO quanLyNhanVienDAO = null;
   private List<ThongTinTruongPhong> listPhongBanInfo;
 
   public void init() {
+    quanLyNhanVienDAO = new QuanLyNhanVienDAO();
     quanLyPhongBanDAO = new QuanLyPhongBanDAO();
   }
 
@@ -38,7 +41,7 @@ public class QuanLyPhongBanController extends HttpServlet {
           listPhongBan(request, response);
           break;
         case "/findphongban":
-          findEmployee(request, response);
+          FindDepartment(request, response);
           break;
         case "/addphongban":
           AddPhongBan(request, response);
@@ -78,6 +81,8 @@ public class QuanLyPhongBanController extends HttpServlet {
       List<ThongTinTruongPhong> listTruongPhong = quanLyPhongBanDAO.selectAllPhongBan(maChiNhanh,
           maPhongBan, login.getQuyen());
       listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
+      List < PhongBan > listDepartment = quanLyNhanVienDAO.selectAllDepart(maChiNhanh);
+
       request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
 
       if (login.getQuyen().equals("admin")) {
@@ -87,6 +92,7 @@ public class QuanLyPhongBanController extends HttpServlet {
         dispatcher.forward(request, response);
       } else if (login.getQuyen().equals("giamdoc")) {
         request.setAttribute("listTruongPhong", listTruongPhong);
+        request.setAttribute("tenPhongBan",listDepartment);
         RequestDispatcher dispatcher = request.getRequestDispatcher(
             "views/giamdoc/QuanLyPhongBan.jsp");
         dispatcher.forward(request, response);
@@ -204,19 +210,43 @@ public class QuanLyPhongBanController extends HttpServlet {
     }
   }
 
-  private void findEmployee(HttpServletRequest request, HttpServletResponse response)
+  private void FindDepartment(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, IOException, ServletException, ParseException {
-//    String maChiNhanh = request.getParameter("maChiNhanh");
-//    String maPhongBan = request.getParameter("maPhongBan");
-//    String role = request.getParameter("role");
-//    String tenNhanVien = request.getParameter("tenNhanVien");
-//    List<ThongTinPhongBan> listPhongBan = quanLyPhongBanDAO.selectAllPhongBan(maChiNhanh,
-//        maPhongBan, role);
-//    List<ThongTinNguoiDung> listNhanVien = quanLyPhongBanDAO.findEmployee(tenNhanVien);
-//    request.setAttribute("listPhongBan", listPhongBan);
-//    request.setAttribute("listNhanVien", listNhanVien);
-//    RequestDispatcher dispatcher = request.getRequestDispatcher("listphongban.jsp");
-//    dispatcher.forward(request, response);
+    HttpSession session = request.getSession();
+    TaiKhoan login = new TaiKhoan();
+    login = (TaiKhoan) session.getAttribute("user");
+
+    if (login == null) {
+      response.sendRedirect("views/system/login.jsp");
+    } else {
+      String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());
+      String maPhongBan = quanLyPhongBanDAO.LayMaPhongBan(login.getMaTaiKhoan());
+
+      String tenPB = request.getParameter("tenPB");
+      tenPB = ConvertToUTF8(tenPB);
+
+      if(tenPB.equals("Chọn phòng ban"))
+        tenPB="%";
+
+      List<ThongTinTruongPhong> listTruongPhong = quanLyPhongBanDAO.findDepartment(maChiNhanh, tenPB);
+      listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
+      List < PhongBan > listDepartment = quanLyNhanVienDAO.selectAllDepart(maChiNhanh);
+
+      request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
+
+      if (login.getQuyen().equals("admin")) {
+        request.setAttribute("listTruongPhong", listTruongPhong);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+                "views/quanli/QuanLiPhongBan.jsp");
+        dispatcher.forward(request, response);
+      } else if (login.getQuyen().equals("giamdoc")) {
+        request.setAttribute("listTruongPhong", listTruongPhong);
+        request.setAttribute("tenPhongBan",listDepartment);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+                "views/giamdoc/QuanLyPhongBan.jsp");
+        dispatcher.forward(request, response);
+      }
+    }
   }
 
   private String ConvertToUTF8(String item) {

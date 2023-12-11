@@ -55,7 +55,37 @@ public class QuanLyPhongBanDAO {
     } catch (SQLException e) {
       HandleException.printSQLException(e);
     }
+    return result;
+  }
 
+  public List<ThongTinTruongPhong> findDepartment(String maChiNhanh, String tenPhongBan)
+  {
+    List<ThongTinTruongPhong> result = new ArrayList<>();
+    try (Connection connection = JDBCUtil.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM thongtintruongphong WHERE MaChiNhanh = ? and  TenPB LIKE ?;");) {
+
+      preparedStatement.setString(1,maChiNhanh);
+      preparedStatement.setString(2,tenPhongBan);
+
+      ResultSet rs = preparedStatement.executeQuery();
+      while (rs.next()) {
+        String MaChiNhanh = rs.getString("MaChiNhanh");
+        String TenChiNhanh = rs.getString("TenChiNhanh");
+        String MaPhongBan = rs.getString("MaPB");
+        String TenPhongBan = rs.getString("TenPB");
+        String NgayTao = rs.getString("Ngaytao");
+        String Sdt = rs.getString("SDT");
+        String Machucvu = rs.getString("MaChucVu");
+        String MaTruongPhong = rs.getString("MaNhanVien");
+        String TenTruongPhong = rs.getString("HoTen");
+
+        ThongTinTruongPhong thongTinTruongPhong = new ThongTinTruongPhong(MaChiNhanh, TenChiNhanh,
+                MaPhongBan, TenPhongBan, NgayTao, Sdt, Machucvu, MaTruongPhong, TenTruongPhong);
+        result.add(thongTinTruongPhong);
+      }
+    } catch (SQLException e) {
+      HandleException.printSQLException(e);
+    }
     return result;
   }
 

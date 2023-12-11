@@ -181,21 +181,22 @@
                     </div>
                 </div>
                 <div>
-                    <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
-                    <div class="d-flex justify-content-around align-items-around">
-                        <select class="form-select w-25">
-                            <option selected>Chọn phòng ban</option>
-                            <option value="1">Nhân sự</option>
-                            <option value="2">Kế toán</option>
-                            <option value="3">Marketing</option>
-                        </select>
-                        <input class="form-control w-25" placeholder="Tìm kiếm" name="text_box_find"
-                               id="text_box_find" onkeyup="Search()"/>
-
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit">
-                            Tìm
-                        </button>
-                    </div>
+                    <form action="<%=request.getContextPath()%>/findphongban" method="post">
+                        <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
+                        <div class="d-flex justify-content-around align-items-around">
+                            <select class="form-select w-25 ms-3" name="tenPB" id="tenPB">
+                                <option selected>Chọn phòng ban</option>
+                                <c:forEach var="listDepart" items="${tenPhongBan}">
+                                    <option value="${listDepart.tenPhongBan}"><c:out value="${listDepart.tenPhongBan}" /></option>
+                                </c:forEach>
+                            </select>
+                            <input class="form-control w-25" placeholder="Tìm kiếm" name="text_box_find"
+                                   id="text_box_find" onkeyup="Search()"/>
+                            <button type="submit" class="btn w-25 font-weight-bold btn-submit">
+                                Tìm
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
             </div>

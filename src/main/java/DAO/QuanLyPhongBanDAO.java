@@ -17,7 +17,8 @@ public class QuanLyPhongBanDAO {
   private static final String SELECT_PHONGBAN_ALL = "SELECT * FROM thongtintruongphong;";
   private static final String SELECT_PHONGBAN_NHANH = "SELECT * FROM thongtintruongphong WHERE MaChiNhanh = ?;";
   private static final String CALL_INSERT_PHONGBAN = "CALL themPhongBan(?, ?, ?, ?, ?, ?, ?, ?,?,?);";
-
+  private static final String CALL_UPDATE_PHONGBAN = "CALL updatePhongBan(?, ?, ?, ?, ?, ?, ?, ?,?,?);";
+  private static final String CALL_DELETE_PHONGBAN = "CALL xoaPhongBan(?);";
   public QuanLyPhongBanDAO() {
   }
 
@@ -185,6 +186,21 @@ public class QuanLyPhongBanDAO {
       return false;
     }
   }
+  public boolean XoaPhongBan(String maPhongBan) {
+    try (Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(CALL_DELETE_PHONGBAN);) {
+      preparedStatement.setString(1, maPhongBan);
+
+      if (preparedStatement.executeUpdate() > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (SQLException e) {
+      HandleException.printSQLException(e);
+      return false;
+    }
+  }
 
   public static void main(String[] args) {
     QuanLyPhongBanDAO quanLyPhongBanDAO = new QuanLyPhongBanDAO();
@@ -202,9 +218,11 @@ public class QuanLyPhongBanDAO {
 //      System.out.println(thongTinPhongBan.getMaChucVu());
 //      System.out.println(thongTinPhongBan.getMaNhanVien());
 //      System.out.println(thongTinPhongBan.getHoTen());
-//    }
-    boolean result = quanLyPhongBanDAO.AddPhongBan("CN101", "PB101", "Test",
-        "2023-12-06", "9844037288", "CV101", "Phong Ki Thuat", 10000000, "NV101", "2023-12-06");
+////    }
+//    boolean result = quanLyPhongBanDAO.AddPhongBan("CN101", "PB101", "Test",
+//        "2023-12-06", "9844037288", "CV101", "Phong Ki Thuat", 10000000, "NV101", "2023-12-06");
+//    System.out.println(result);
+    boolean result = quanLyPhongBanDAO.XoaPhongBan("PB101");
     System.out.println(result);
   }
 }

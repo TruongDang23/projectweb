@@ -354,20 +354,23 @@
                     <div class="mb-3">
                         <label class="col-form-label">Mã chi nhánh:
                         </label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control" name="MaChiNhanh"
+                               id="UpdateMaChiNhanh" disabled
                                placeholder="Mã chi nhánh" required/>
                     </div>
                     <div class="d-flex mb-2 justify-content-between">
                         <div>
                             <label class="col-form-label">Mã phòng ban:
                             </label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="MaPhongBan"
+                                   id="UpdateMaPhongBan" disabled
                                    placeholder="Mã phòng ban" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Tên phòng ban:
                             </label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="TenPhongBan"
+                                   id="UpdateTenPhongBan"
                                    placeholder="Tên phòng ban" required/>
                         </div>
                     </div>
@@ -375,13 +378,14 @@
                         <div>
                             <label class="col-form-label">Ngày tạo:
                             </label>
-                            <input type="date" class="form-control"
+                            <input type="date" class="form-control" name="NgayTao"
+                                   id="UpdateNgayTao"
                                    placeholder="Ngày tạo" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Số điện thoại:
                             </label>
-                            <input type="number" class="form-control"
+                            <input type="number" class="form-control" name="SDT" id="UpdateSDT"
                                    placeholder="Tên phòng ban" required/>
                         </div>
                     </div>
@@ -389,36 +393,20 @@
                         <div>
                             <label class="col-form-label">Mã chức vụ:
                             </label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="MaChucVu"
+                                   id="UpdateMaChucVu"
                                    placeholder="Mã chức vụ" required/>
-                        </div>
-                        <div>
-                            <label class="col-form-label">Tên chức vụ:
-                            </label>
-                            <input type="text" class="form-control"
-                                   placeholder="Tên phòng ban" required/>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-2 justify-content-between">
-                        <div>
-                            <label class="col-form-label">Lương cơ bản:
-                            </label>
-                            <input type="number" class="form-control"
-                                   placeholder="Ngày tạo" required/>
                         </div>
                         <div>
                             <label class="col-form-label">Mã trưởng phòng:
                             </label>
-                            <input type="number" class="form-control"
+                            <input type="text" class="form-control" name="MaTruongPhong"
+                                   id="UpdateMaTruongPhong"
                                    placeholder="Tên phòng ban" required/>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Ngày bắt đầu:
-                        </label>
-                        <input type="date" class="form-control"
-                               placeholder="Ngày tạo" required/>
-                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn w-25 font-weight-bold btn-warning"
@@ -446,21 +434,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p style="font-size: 16px">
-                    Bạn có chắc chắn muốn xóa phòng ban này không? Hành động này không
-                    thể hoàn tác.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                        data-bs-dismiss="modal">
-                    Đóng
-                </button>
-                <button type="button submit" class="btn w-25 font-weight-bold btn-danger">
-                    Xóa
-                </button>
-            </div>
+            <form action="<%=request.getContextPath()%>/deletephongban" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label">Mã phòng ban:
+                        </label>
+                        <input type="text" class="form-control" name="DeleteMaPhongBan"
+                               id="XoaMaPhongBan"
+                               placeholder="Mã phòng ban" required/>
+                    </div>
+                    <p style="font-size: 16px">
+                        Bạn có chắc chắn muốn xóa phòng ban này không? Hành động này không
+                        thể hoàn tác.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
+                            data-bs-dismiss="modal">
+                        Đóng
+                    </button>
+                    <button type="button submit" class="btn w-25 font-weight-bold btn-danger">
+                        Xóa
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -504,6 +501,16 @@
         document.getElementById('tenphongban').value = emp.tenPB;
         document.getElementById('idtruongphong').value = emp.maNhanVien;
         document.getElementById('tentruongphong').value = emp.hoTen;
+
+        document.getElementById('UpdateMaChiNhanh').value = emp.maChiNhanh;
+        document.getElementById('UpdateMaPhongBan').value = emp.maPB;
+        document.getElementById('UpdateTenPhongBan').value = emp.tenPB;
+        document.getElementById('UpdateNgayTao').value = emp.ngayTao;
+        document.getElementById('UpdateSDT').value = emp.sdt;
+        document.getElementById('UpdateMaChucVu').value = emp.maChucVu;
+        document.getElementById('UpdateMaTruongPhong').value = emp.maNhanVien;
+
+        document.getElementById('XoaMaPhongBan').value = emp.maPB;
         break;
       }
 

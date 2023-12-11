@@ -16,7 +16,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-@WebServlet(name = "QuanLyPhongBanController", urlPatterns = {"/listphongban", "/findphongban", "/addphongban"})
+@WebServlet(name = "QuanLyPhongBanController", urlPatterns = {"/listphongban", "/findphongban",
+    "/addphongban", "/deletephongban"})
 public class QuanLyPhongBanController extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
@@ -41,6 +42,9 @@ public class QuanLyPhongBanController extends HttpServlet {
           break;
         case "/addphongban":
           AddPhongBan(request, response);
+          break;
+        case "/deletephongban":
+          DeletePhongBan(request, response);
           break;
         default:
           break;
@@ -86,6 +90,7 @@ public class QuanLyPhongBanController extends HttpServlet {
       }
     }
   }
+
   private void AddPhongBan(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, IOException, ServletException, ParseException {
     HttpSession session = request.getSession();
@@ -94,9 +99,7 @@ public class QuanLyPhongBanController extends HttpServlet {
 
     if (login == null) {
       response.sendRedirect("views/system/login.jsp");
-    }
-    else
-    {
+    } else {
       String maChiNhanh = request.getParameter("MaChiNhanh");
       String maPhongBan = request.getParameter("MaPhongBan");
       String tenPhongBan = request.getParameter("TenPhongBan");
@@ -112,13 +115,38 @@ public class QuanLyPhongBanController extends HttpServlet {
       tenChucVu = ConvertToUTF8(tenChucVu);
       int luong = Integer.parseInt(luongCoBan);
 
-      if (quanLyPhongBanDAO.AddPhongBan(maChiNhanh, maPhongBan, tenPhongBan, ngayTao, sdt, maChucVu, tenChucVu, luong, maTruongPhong, ngayBatDau))
-      {
-        request.setAttribute("Result","Thêm Phòng Ban thành công");
+      if (quanLyPhongBanDAO.AddPhongBan(maChiNhanh, maPhongBan, tenPhongBan, ngayTao, sdt, maChucVu,
+          tenChucVu, luong, maTruongPhong, ngayBatDau)) {
+        request.setAttribute("Result", "Thêm Phòng Ban thành công");
+      } else {
+        request.setAttribute("Result", "Thêm Phòng Ban thất bại");
       }
-      else
-      {
-        request.setAttribute("Result","Thêm Phòng Ban thất bại");
+      if (login.getQuyen().equals("admin")) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+            "views/quanli/QuanLiPhongBan.jsp");
+        dispatcher.forward(request, response);
+      } else if (login.getQuyen().equals("giamdoc")) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+            "views/giamdoc/QuanLyPhongBan.jsp");
+        dispatcher.forward(request, response);
+      }
+    }
+  }
+  private void DeletePhongBan(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException, IOException, ServletException, ParseException {
+    HttpSession session = request.getSession();
+    TaiKhoan login = new TaiKhoan();
+    login = (TaiKhoan) session.getAttribute("user");
+
+    if (login == null) {
+      response.sendRedirect("views/system/login.jsp");
+    } else {
+      String maPhongBan = request.getParameter("DeleteMaPhongBan");
+
+      if (quanLyPhongBanDAO.XoaPhongBan(maPhongBan)) {
+        request.setAttribute("Result", "Xóa Phòng Ban thành công");
+      } else {
+        request.setAttribute("Result", "Xóa Phòng Ban thất bại");
       }
       if (login.getQuyen().equals("admin")) {
         RequestDispatcher dispatcher = request.getRequestDispatcher(
@@ -146,8 +174,8 @@ public class QuanLyPhongBanController extends HttpServlet {
 //    RequestDispatcher dispatcher = request.getRequestDispatcher("listphongban.jsp");
 //    dispatcher.forward(request, response);
   }
-  private String ConvertToUTF8(String item)
-  {
+
+  private String ConvertToUTF8(String item) {
     String result;
     byte[] bytes = item.getBytes(StandardCharsets.ISO_8859_1);
     result = new String(bytes, StandardCharsets.UTF_8);

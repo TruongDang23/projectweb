@@ -57,7 +57,7 @@
                     <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiGuiMail.jsp"><i class="fa fa-commenting-o"></i>Gửi mail</a>
                 </li>
                 <li>
-                    <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiChiNhanh.jsp"><i class="fa fa-location-arrow"></i>Quản lý chi
+                    <a class="mt-3" href="<%=request.getContextPath()%>/listChiNhanh"><i class="fa fa-location-arrow"></i>Quản lý chi
                         nhánh</a>
                 </li>
 

@@ -26,6 +26,7 @@ public class QuanLyChiNhanhController extends HttpServlet {
         quanLyChiNhanhDAO = new QuanLyChiNhanhDAO();
     }
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getServletPath();
@@ -64,12 +65,10 @@ public class QuanLyChiNhanhController extends HttpServlet {
 
         return result;
     }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request,response);
     }
-
     private void Deletechinhanh(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException
     {
@@ -116,7 +115,7 @@ public class QuanLyChiNhanhController extends HttpServlet {
             List < ChiNhanh> listAllChiNhanh = quanLyChiNhanhDAO.findAllChiNhanh(tenCN);
 
             request.setAttribute("listtenChiNhanh",listtenChiNhanh);
-            request.setAttribute("listAllChiNhanh",listAllChiNhanh);
+            request.setAttribute("listChiNhanh",listAllChiNhanh);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiChiNhanh.jsp");
             dispatcher.forward(request,response);
@@ -235,4 +234,6 @@ public class QuanLyChiNhanhController extends HttpServlet {
             dispatcher.forward(request,response);
         }
     }
+
+
 }

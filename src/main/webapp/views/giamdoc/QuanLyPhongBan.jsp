@@ -109,7 +109,8 @@
                     </div>
                     <div class="navbar-text">
                         <h3>Xin chào Giám đốc</h3>
-                        <a href="<%=request.getContextPath()%>/logout"><i class="fa fa-sign-out icon-size"></i></a>
+                        <a href="<%=request.getContextPath()%>/logout"><i
+                                class="fa fa-sign-out icon-size"></i></a>
                     </div>
                 </div>
             </div>
@@ -196,25 +197,7 @@
                         </button>
                     </div>
                 </div>
-                <div>
-                    <div class="panel-heading" style="font-weight: 600">
-                        Tùy chọn phòng ban
-                    </div>
-                    <div class="d-flex justify-content-around align-items-around">
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#ThemPhongBan">
-                            Thêm
-                        </button>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#SuaPhongBan">
-                            Sửa
-                        </button>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#XoaPhongBan">
-                            Xóa
-                        </button>
-                    </div>
-                </div>
+
             </div>
             <div class="col-lg-5 d-flex flex-column">
                 <div>
@@ -236,19 +219,19 @@
                 </div>
                 <div>
                     <div class="panel-heading" style="font-weight: 600">
-                        Tùy chọn Trưởng phòng
+                        Tùy chọn phòng ban
                     </div>
                     <div class="d-flex justify-content-around align-items-around">
                         <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#ThemTruongPhong">
+                                data-bs-toggle="modal" data-bs-target="#ThemPhongBan">
                             Thêm
                         </button>
                         <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#SuaTruongPhong">
+                                data-bs-toggle="modal" data-bs-target="#SuaPhongBan">
                             Sửa
                         </button>
                         <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#XoaTruongPhong">
+                                data-bs-toggle="modal" data-bs-target="#XoaPhongBan">
                             Xóa
                         </button>
                     </div>
@@ -259,118 +242,6 @@
 </div>
 
 <!-- TODO: Edit Modal HTML -->
-<!-- ? Trưởng phòng -->
-<!-- Thêm trưởng phòng -->
-<div class="modal fade" id="ThemTruongPhong" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    Thêm trưởng phòng
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-truong-phong" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id-giam-doc" placeholder="ID"
-                               required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ten-truong-phong" class="col-form-label">Tên trưởng
-                            phòng:</label>
-                        <input type="text" class="form-control" id="ten-giam-doc"
-                               placeholder="Tên trưởng phòng" required/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                            data-bs-dismiss="modal">
-                        Đóng
-                    </button>
-                    <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Thêm
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Sửa trưởng phòng -->
-<div class="modal fade" id="SuaTruongPhong" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    Sửa trưởng phòng
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-truong-phong" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id-truong-phong" value="TP001"
-                               placeholder="ID" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ten-truong-phong" class="col-form-label">Tên trưởng
-                            phòng:</label>
-                        <input type="text" class="form-control" id="ten-truong-phong"
-                               value="Lê Thành Vinh"
-                               placeholder="Tên trưởng phòng" required/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                            data-bs-dismiss="modal">
-                        Đóng
-                    </button>
-                    <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Sửa
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Xóa trưởng phòng -->
-<div class="modal fade" id="XoaTruongPhong" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    Xóa trưởng phòng này!?
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p style="font-size: 16px">
-                    Bạn có chắc chắn muốn xóa trưởng phòng này không? Hành động này
-                    không thể hoàn tác.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                        data-bs-dismiss="modal">
-                    Đóng
-                </button>
-                <button type="button" class="btn w-25 font-weight-bold btn-danger">
-                    Xóa
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- ? Phòng ban -->
 <!-- Thêm phòng ban -->
 <div class="modal fade" id="ThemPhongBan" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -386,16 +257,72 @@
             <form>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="ten-chi-nhanh" class="col-form-label">Tên chi nhánh:
+                        <label class="col-form-label">Mã chi nhánh:
                         </label>
                         <input type="text" class="form-control"
-                               placeholder="Tên chi nhánh" required/>
+                               placeholder="Mã chi nhánh" required/>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã phòng ban:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Mã phòng ban" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên phòng ban:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Ngày tạo:
+                            </label>
+                            <input type="date" class="form-control"
+                                   placeholder="Ngày tạo" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Số điện thoại:
+                            </label>
+                            <input type="number" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã chức vụ:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Mã chức vụ" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên chức vụ:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Lương cơ bản:
+                            </label>
+                            <input type="number" class="form-control"
+                                   placeholder="Ngày tạo" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Mã trưởng phòng:
+                            </label>
+                            <input type="number" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="ten-phong-ban" class="col-form-label">Tên phòng ban:
+                        <label class="col-form-label">Ngày bắt đầu:
                         </label>
-                        <input type="text" class="form-control"
-                               placeholder="Tên phòng ban" required/>
+                        <input type="date" class="form-control"
+                               placeholder="Ngày tạo" required/>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -418,23 +345,79 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >Sửa phòng ban</h5>
+                <h5 class="modal-title">Sửa phòng ban</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form id="commonForm">
+            <form>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="ten-chi-nhanh" class="col-form-label">Tên chi nhánh:
+                        <label class="col-form-label">Mã chi nhánh:
                         </label>
-                        <input type="text" class="form-control" id="ten-chi-nhanh"
-                               placeholder="Tên chi nhánh" value="TP.HCM" required/>
+                        <input type="text" class="form-control"
+                               placeholder="Mã chi nhánh" required/>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã phòng ban:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Mã phòng ban" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên phòng ban:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Ngày tạo:
+                            </label>
+                            <input type="date" class="form-control"
+                                   placeholder="Ngày tạo" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Số điện thoại:
+                            </label>
+                            <input type="number" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã chức vụ:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Mã chức vụ" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên chức vụ:
+                            </label>
+                            <input type="text" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Lương cơ bản:
+                            </label>
+                            <input type="number" class="form-control"
+                                   placeholder="Ngày tạo" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Mã trưởng phòng:
+                            </label>
+                            <input type="number" class="form-control"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="ten-phong-ban" class="col-form-label">Tên phòng ban:
+                        <label class="col-form-label">Ngày bắt đầu:
                         </label>
-                        <input type="text" class="form-control" id="ten-phong-ban"
-                               placeholder="Tên phòng ban" value="Marketing" required/>
+                        <input type="date" class="form-control"
+                               placeholder="Ngày tạo" required/>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -507,6 +490,7 @@
         searchTable.rows.item(rowIndex).style.display = 'table-row';
     }
   }
+
   function DisplayInfo(e) {
     let list = <%= json%>;
     let row = e.target.parentNode;
@@ -514,7 +498,7 @@
     // clear space maPB
     maPB = maPB.replace(/\s/g, '');
 
-    for (let i =0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       let emp = list[i];
       if (emp.maPB == maPB) {
         document.getElementById('tenphongban').value = emp.tenPB;

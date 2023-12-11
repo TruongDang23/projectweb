@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-@WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet"})
+@WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet","/logout"})
 public class LoginController extends HttpServlet
 {
     private String host;
@@ -49,6 +49,9 @@ public class LoginController extends HttpServlet
             case "/login":
                 authenticate(request, response);
                 break;
+            case "/logout":
+                Logout(request,response);
+                break;
         }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -56,6 +59,7 @@ public class LoginController extends HttpServlet
     {
         doGet(request,response);
     }
+
     private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -110,6 +114,14 @@ public class LoginController extends HttpServlet
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void Logout(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/system/login.jsp");
+        dispatcher.forward(request, response);
     }
 }
 

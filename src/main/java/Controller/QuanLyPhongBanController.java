@@ -58,24 +58,28 @@ public class QuanLyPhongBanController extends HttpServlet {
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
 
-    String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());
-    String maPhongBan = quanLyPhongBanDAO.LayMaPhongBan(login.getMaTaiKhoan());
+    if(login == null)
+      response.sendRedirect("views/system/login.jsp");
+    else {
+      String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());
+      String maPhongBan = quanLyPhongBanDAO.LayMaPhongBan(login.getMaTaiKhoan());
 
-    List<ThongTinTruongPhong> listTruongPhong = quanLyPhongBanDAO.selectAllPhongBan(maChiNhanh,
-        maPhongBan, login.getQuyen());
-    listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
-    request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
+      List<ThongTinTruongPhong> listTruongPhong = quanLyPhongBanDAO.selectAllPhongBan(maChiNhanh,
+          maPhongBan, login.getQuyen());
+      listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
+      request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
 
-    if (login.getQuyen().equals("admin"))
-    {
-      request.setAttribute("listTruongPhong", listTruongPhong);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiPhongBan.jsp");
-      dispatcher.forward(request, response);
-    }
-    else if (login.getQuyen().equals("giamdoc")) {
-      request.setAttribute("listTruongPhong", listTruongPhong);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/QuanLyPhongBan.jsp");
-      dispatcher.forward(request, response);
+      if (login.getQuyen().equals("admin"))
+      {
+        request.setAttribute("listTruongPhong", listTruongPhong);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiPhongBan.jsp");
+        dispatcher.forward(request, response);
+      }
+      else if (login.getQuyen().equals("giamdoc")) {
+        request.setAttribute("listTruongPhong", listTruongPhong);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/QuanLyPhongBan.jsp");
+        dispatcher.forward(request, response);
+      }
     }
   }
   private void findEmployee(HttpServletRequest request, HttpServletResponse response)

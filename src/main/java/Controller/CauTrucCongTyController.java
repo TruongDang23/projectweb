@@ -45,30 +45,36 @@ public class CauTrucCongTyController extends HttpServlet {
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
 
-        cauTrucCongTyDAO = new CauTrucCongTyDAO();
-        List <CayChiNhanh> structure = cauTrucCongTyDAO.LoadStructure();
+        if(login == null)
+        {
+            response.sendRedirect("views/system/login.jsp");
+        }
+        else {
+            cauTrucCongTyDAO = new CauTrucCongTyDAO();
+            List <CayChiNhanh> structure = cauTrucCongTyDAO.LoadStructure();
 
-        request.setAttribute("CauTrucCongTy",structure);
+            request.setAttribute("CauTrucCongTy",structure);
 
-        if(login.getQuyen().equals("admin"))
-        {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiCauTruc.jsp");
-            dispatcher.forward(request,response);
-        }
-        else if(login.getQuyen().equals("giamdoc"))
-        {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/XemCauTruc.jsp");
-            dispatcher.forward(request,response);
-        }
-        else if(login.getQuyen().equals("truongphong"))
-        {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("views/truongphong/XemCauTruc.jsp");
-            dispatcher.forward(request,response);
-        }
-        else
-        {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("views/nhanvien/NhanVienCauTruc.jsp");
-            dispatcher.forward(request,response);
+            if(login.getQuyen().equals("admin"))
+            {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiCauTruc.jsp");
+                dispatcher.forward(request,response);
+            }
+            else if(login.getQuyen().equals("giamdoc"))
+            {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/XemCauTruc.jsp");
+                dispatcher.forward(request,response);
+            }
+            else if(login.getQuyen().equals("truongphong"))
+            {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/truongphong/XemCauTruc.jsp");
+                dispatcher.forward(request,response);
+            }
+            else
+            {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("views/nhanvien/NhanVienCauTruc.jsp");
+                dispatcher.forward(request,response);
+            }
         }
     }
 }

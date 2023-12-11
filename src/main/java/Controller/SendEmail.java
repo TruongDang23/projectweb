@@ -36,45 +36,49 @@ public class SendEmail extends HttpServlet {
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
 
-        String recipient = request.getParameter("received-email");
-        String subject = request.getParameter("title-email");
-        String content = request.getParameter("content-email");
+        if(login == null)
+            response.sendRedirect("views/system/login.jsp");
+        else{
+            String recipient = request.getParameter("received-email");
+            String subject = request.getParameter("title-email");
+            String content = request.getParameter("content-email");
 
-        recipient = ConvertToUTF8(recipient);
-        subject = ConvertToUTF8(subject);
-        content = ConvertToUTF8(content);
+            recipient = ConvertToUTF8(recipient);
+            subject = ConvertToUTF8(subject);
+            content = ConvertToUTF8(content);
 
-        String resultMessage = "";
+            String resultMessage = "";
 
-        try {
-            EmailDAO.sendEmail(host, port, user, pass, recipient, subject,
-                    content);
-            resultMessage = "Gửi email thành công";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            resultMessage = "Đã có lỗi xảy ra: " + ex.getMessage();
-        } finally {
-            request.setAttribute("Result", resultMessage);
+            try {
+                EmailDAO.sendEmail(host, port, user, pass, recipient, subject,
+                        content);
+                resultMessage = "Gửi email thành công";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resultMessage = "Đã có lỗi xảy ra: " + ex.getMessage();
+            } finally {
+                request.setAttribute("Result", resultMessage);
 
-            if(login.getQuyen().equals("admin"))
-            {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiGuiMail.jsp");
-                dispatcher.forward(request, response);
-            }
-            else if(login.getQuyen().equals("giamdoc"))
-            {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/GuiEmail.jsp");
-                dispatcher.forward(request, response);
-            }
-            else if(login.getQuyen().equals("truongphong"))
-            {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("views/truongphong/GuiEmail.jsp");
-                dispatcher.forward(request, response);
-            }
-            else if(login.getQuyen().equals("nhanvien"))
-            {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("views/nhanvien/NhanVienGuiMail.jsp");
-                dispatcher.forward(request, response);
+                if(login.getQuyen().equals("admin"))
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiGuiMail.jsp");
+                    dispatcher.forward(request, response);
+                }
+                else if(login.getQuyen().equals("giamdoc"))
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("views/giamdoc/GuiEmail.jsp");
+                    dispatcher.forward(request, response);
+                }
+                else if(login.getQuyen().equals("truongphong"))
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("views/truongphong/GuiEmail.jsp");
+                    dispatcher.forward(request, response);
+                }
+                else if(login.getQuyen().equals("nhanvien"))
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("views/nhanvien/NhanVienGuiMail.jsp");
+                    dispatcher.forward(request, response);
+                }
             }
         }
     }

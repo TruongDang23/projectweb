@@ -113,10 +113,11 @@ public class QuanLyChiNhanhController extends HttpServlet {
 
             List < ChiNhanh > listtenChiNhanh = quanLyChiNhanhDAO.selecttenChiNhanh();
             List < ChiNhanh> listAllChiNhanh = quanLyChiNhanhDAO.findAllChiNhanh(tenCN);
+            listInfo = quanLyChiNhanhDAO.loadInfomation();
 
             request.setAttribute("listtenChiNhanh",listtenChiNhanh);
             request.setAttribute("listChiNhanh",listAllChiNhanh);
-
+            request.setAttribute("ThongTinNguoiDung",listInfo);
             RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiChiNhanh.jsp");
             dispatcher.forward(request,response);
         }

@@ -3,10 +3,7 @@ package DAO;
 import JDBCUtils.HandleException;
 import JDBCUtils.JDBCUtil;
 import Models.ChiNhanh;
-import Models.PhongBan;
-import Models.ThongTinCongTac;
 import Models.ThongTinNguoiDung;
-
 import javax.swing.text.AsyncBoxView;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -95,7 +92,7 @@ public class QuanLyChiNhanhDAO {
         List <ChiNhanh> info = new ArrayList < > ();
 
         try (Connection connection = JDBCUtil.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("select * from project_web.chinhanh ");) {
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from chinhanh ");) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -188,7 +185,6 @@ public class QuanLyChiNhanhDAO {
         }
         return info;
     }
-
     public boolean Deletechinhanh(String machinhanh)
     {
         try (Connection connection = JDBCUtil.getConnection();

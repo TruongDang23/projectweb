@@ -47,7 +47,7 @@
             </li>
             <li>
                 <a class="mt-3"
-                   href="<%=request.getContextPath()%>/views/quanli/QuanLiChiNhanh.jsp"><i
+                   href="<%=request.getContextPath()%>/listChiNhanh"><i
                         class="fa fa-location-arrow"></i>Quản lý chi
                     nhánh</a>
             </li>

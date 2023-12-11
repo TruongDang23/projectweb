@@ -92,7 +92,7 @@
                 >
             </li>
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiChiNhanh.jsp"
+                <a class="mt-3" href="<%=request.getContextPath()%>/listChiNhanh"
                 ><i class="fa fa-location-arrow"></i>Quản lý chi nhánh</a
                 >
             </li>

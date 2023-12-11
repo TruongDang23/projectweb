@@ -86,15 +86,8 @@ public class QuanLyChiNhanhController extends HttpServlet {
     private void FindInfo(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException
     {
-        HttpSession session = request.getSession();
-        TaiKhoan login = new TaiKhoan();
-        login=(TaiKhoan)session.getAttribute("user");
-
         String tenCN = request.getParameter("tenCN");
-
         tenCN = ConvertToUTF8(tenCN);
-
-
         if(tenCN.equals("Chọn tên chi nhánh"))
             tenCN="%";
 
@@ -102,7 +95,7 @@ public class QuanLyChiNhanhController extends HttpServlet {
         List < ChiNhanh> listAllChiNhanh = quanLyChiNhanhDAO.findAllChiNhanh(tenCN);
 
         request.setAttribute("listtenChiNhanh",listtenChiNhanh);
-        request.setAttribute("listAllChiNhanh",listAllChiNhanh);
+        request.setAttribute("listChiNhanh",listAllChiNhanh);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/quanli/QuanLiChiNhanh.jsp");
         dispatcher.forward(request,response);
@@ -110,13 +103,11 @@ public class QuanLyChiNhanhController extends HttpServlet {
     private void ListChiNhanh(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException
     {
-        HttpSession session = request.getSession();
-        TaiKhoan login = new TaiKhoan();
-        login=(TaiKhoan)session.getAttribute("user");
+
         List < ChiNhanh> listChiNhanh = quanLyChiNhanhDAO.selectAllChiNhanh();
         List < ChiNhanh> listtenChiNhanh = quanLyChiNhanhDAO.selecttenChiNhanh();
         listInfo = quanLyChiNhanhDAO.loadInfomation();
-        listInfoChiNhanh=quanLyChiNhanhDAO.loadInfomationchinhanh();
+        listInfoChiNhanh = quanLyChiNhanhDAO.loadInfomationchinhanh();
 
         request.setAttribute("listChiNhanh",listChiNhanh);
         request.setAttribute("listtenChiNhanh",listtenChiNhanh);

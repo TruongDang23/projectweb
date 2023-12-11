@@ -24,7 +24,7 @@ public class ChiNhanh {
         this.sdt = sdt;
         this.maGiamDoc = maGiamDoc;
     }
-    public ChiNhanh( String tenChiNhanhdt) {
+    public ChiNhanh( String tenChiNhanh) {
 
         this.tenChiNhanh = tenChiNhanh;
 

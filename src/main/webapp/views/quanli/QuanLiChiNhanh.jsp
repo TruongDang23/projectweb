@@ -73,7 +73,7 @@
                     mail</a>
             </li>
             <li class="active">
-                <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiChiNhanh.jsp"><i class="fa fa-location-arrow"></i>Quản
+                <a class="mt-3" href="<%=request.getContextPath()%>/listInfoChiNhanh"><i class="fa fa-location-arrow"></i>Quản
                     lý chi
                     nhánh</a>
             </li>

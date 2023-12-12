@@ -515,15 +515,13 @@
         document.getElementById('idtruongphong').value = emp.maNhanVien;
         document.getElementById('tentruongphong').value = emp.hoTen;
 
+        document.getElementById('XoaMaPhongBan').value = emp.maPB;
+
         document.getElementById('SuaMaChiNhanh').value = emp.maChiNhanh;
         document.getElementById('SuaMaPhongBan').value = emp.maPB;
         document.getElementById('SuaTenPhongBan').value = emp.tenPB;
-        document.getElementById('SuaNgayTao').value = emp.ngayTao;
-        document.getElementById('SuaSDT').value = emp.sdt;
         document.getElementById('SuaMaChucVu').value = emp.maChucVu;
         document.getElementById('SuaMaTruongPhong').value = emp.maNhanVien;
-
-        document.getElementById('XoaMaPhongBan').value = emp.maPB;
         break;
       }
 

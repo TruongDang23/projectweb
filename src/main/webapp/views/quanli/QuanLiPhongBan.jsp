@@ -1,6 +1,13 @@
+<%@ page import="Models.ThongTinNguoiDung" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="Models.ThongTinPhongBan" %>
+<%@ page import="Models.ThongTinTruongPhong" %>
 <%-- Created by IntelliJ IDEA. User: GIGABYTE Date: 11/25/2023 Time: 9:30 AM To change this template use File | Settings
 | File Templates. --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,11 +33,27 @@
     <link href="${pageContext.request.contextPath}/img/logo.png" rel="icon"/>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <title>Quản lí - Phòng ban</title>
 </head>
 
 <body>
 <script src="https://use.fontawesome.com/f59bcd8580.js"></script>
+<%
+    List<ThongTinTruongPhong> listTruongPhongInfo = (List<ThongTinTruongPhong>) request.getAttribute(
+            "thongTinTruongPhong");
+    Gson gson = new Gson();
+    String json = gson.toJson(listTruongPhongInfo);
+%>
+<script>
+  window.onload = function () {
+    let msg = "<%= request.getAttribute("Result")%>";
+    if (msg != "null")
+      alert(msg);
+  }
+</script>
 <div id="wrapper">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand mb-5">
@@ -39,33 +62,39 @@
         </div>
         <ul class="sidebar-nav">
             <li>
-                <a href="<%=request.getContextPath()%>/xemcautruc"><i class="fa fa-building-o"></i>Cấu trúc công ty</a>
+                <a href="<%=request.getContextPath()%>/xemcautruc"><i class="fa fa-building-o"></i>Cấu
+                    trúc công ty</a>
             </li>
             <li>
                 <a class="mt-3" href="<%=request.getContextPath()%>/infoEmployee"><i
                         class="fa fa-drivers-license"></i>Cập nhật thông tin</a>
             </li>
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiGuiMail.jsp"><i class="fa fa-commenting-o"></i>Gửi
+                <a class="mt-3" href="<%=request.getContextPath()%>/views/quanli/QuanLiGuiMail.jsp"><i
+                        class="fa fa-commenting-o"></i>Gửi
                     mail</a>
             </li>
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/listChiNhanh"><i class="fa fa-location-arrow"></i>Quản
+                <a class="mt-3" href="<%=request.getContextPath()%>/listChiNhanh"><i
+                        class="fa fa-location-arrow"></i>Quản
                     lý chi
                     nhánh</a>
             </li>
 
             <li class="active">
-                <a class="mt-3" href="<%=request.getContextPath()%>/listphongban"><i class="fa fa-sitemap"></i>Quản lý
+                <a class="mt-3" href="<%=request.getContextPath()%>/listphongban"><i
+                        class="fa fa-sitemap"></i>Quản lý
                     phòng
                     ban</a>
             </li>
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/listemployee"><i class="fa fa-users"></i>Quản lý nhân
+                <a class="mt-3" href="<%=request.getContextPath()%>/listemployee"><i
+                        class="fa fa-users"></i>Quản lý nhân
                     viên</a>
             </li>
             <li>
-                <a class="mt-3" href="<%=request.getContextPath()%>/listSalary"><i class="fa fa-bar-chart"></i>Thống
+                <a class="mt-3" href="<%=request.getContextPath()%>/listSalary"><i
+                        class="fa fa-bar-chart"></i>Thống
                     kê tiền lương</a>
             </li>
         </ul>
@@ -87,7 +116,8 @@
                     </div>
                     <div class="navbar-text">
                         <h3>Xin chào Quản trị viên</h3>
-                        <a href="<%=request.getContextPath()%>/logout"><i class="fa fa-sign-out icon-size"></i></a>
+                        <a href="<%=request.getContextPath()%>/logout"><i
+                                class="fa fa-sign-out icon-size"></i></a>
                     </div>
                 </div>
             </div>
@@ -106,180 +136,51 @@
                     <div class="panel-heading">Danh sách phòng ban</div>
                     <div class="panel-body">
                         <div class="scroll-bar">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover"
-                                       id="dtVerticalScrollExample">
+                            <div class="table-responsive" style="overflow-x: scroll;">
+                                <table
+                                        class="table table-striped table-bordered table-hover"
+                                        id="BangTruongPhong"
+                                        onclick="DisplayInfo(event)"
+                                >
                                     <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th style="min-width: 90px;">Mã chi nhánh</th>
+                                        <th style="min-width: 160px;">Tên chi nhánh</th>
+                                        <th style="min-width: 160px;">Mã phòng ban</th>
+                                        <th style="min-width: 160px;">Tên phòng ban</th>
+                                        <th style="min-width: 150px;">Ngày tạo</th>
+                                        <th style="min-width: 150px;">Số điện thoại</th>
+                                        <th style="min-width: 150px;">Trưởng phòng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">4</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.5</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 6</td>
-                                        <td>Win 98+</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 7</td>
-                                        <td>Win XP SP2+</td>
-                                        <td class="center">7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>AOL browser (AOL desktop)</td>
-                                        <td>Win XP</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.5</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 2.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 3.0</td>
-                                        <td>Win 2k+ / OSX.3+</td>
-                                        <td class="center">1.9</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.0</td>
-                                        <td>OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.5</td>
-                                        <td>OSX.3+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape 7.2</td>
-                                        <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Browser 8</td>
-                                        <td>Win 98SE+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Navigator 9</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.2</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.4</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.5</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.6</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.7</td>
-                                        <td>Win 98+ / OSX.1+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
+                                    <!--   for (Todo todo: todos) {  -->
+                                    <c:forEach var="info" items="${listTruongPhong}">
+                                        <tr>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.maChiNhanh}"/>
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.tenChiNhanh}"/>
+                                            </td>
+                                            <td style="min-width: 90px;">
+                                                <c:out value="${info.maPB}"/>
+                                            </td>
+                                            <td style="min-width: 100px;">
+                                                <c:out value="${info.tenPB}"/>
+                                            </td>
+                                            <td style="min-width: 160px;">
+                                                <c:out value="${info.ngayTao}"/>
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.sdt}"/>
+                                            </td>
+                                            <td style="min-width: 150px;">
+                                                <c:out value="${info.hoTen}"/>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    <!-- } -->
                                     </tbody>
                                 </table>
                             </div>
@@ -287,23 +188,46 @@
                     </div>
                 </div>
                 <div>
-                    <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
-                    <div class="d-flex justify-content-around align-items-around">
-                        <select class="form-select w-25">
-                            <option selected>Chọn chi nhánh</option>
-                            <option value="1">Hà Nội</option>
-                            <option value="2">TP.HCM</option>
-                            <option value="3">Nha Trang</option>
-                        </select>
-                        <select class="form-select w-25">
-                            <option selected>Chọn phòng ban</option>
-                            <option value="1">Nhân sự</option>
-                            <option value="2">Kế toán</option>
-                            <option value="3">Marketing</option>
-                        </select>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit">
-                            Tìm
-                        </button>
+                    <form action="<%=request.getContextPath()%>/findphongban" method="post">
+
+                        <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
+                        <div class="d-flex mb-3 justify-content-around align-items-around">
+                            <select class="form-select w-25">
+                                <option selected>Chọn chi nhánh</option>
+                                <option value="1">Hà Nội</option>
+                                <option value="2">TP.HCM</option>
+                                <option value="3">Nha Trang</option>
+                            </select>
+                            <select class="form-select w-25 ms-3" name="tenPB" id="tenPB">
+                                <option selected>Chọn phòng ban</option>
+                                <c:forEach var="listDepart" items="${tenPhongBan}">
+                                    <option value="${listDepart.tenPhongBan}"><c:out
+                                            value="${listDepart.tenPhongBan}"/></option>
+                                </c:forEach>
+                            </select>
+                            <input class="form-control w-25" placeholder="Tìm kiếm"
+                                   name="text_box_find"
+                                   id="text_box_find" onkeyup="Search()"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5 d-flex flex-column">
+                <div>
+                    <div class="panel-heading" style="font-weight: 600">
+                        Thông tin Trưởng phòng
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Tên phòng:</label>
+                        <input class="form-control" placeholder="tên phòng" id="tenphongban"/>
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>ID trưởng phòng:</label>
+                        <input class="form-control" placeholder="ID" id="idtruongphong"/>
+                    </div>
+                    <div class="form-group ms-3 mb-3">
+                        <label>Họ và tên:</label>
+                        <input class="form-control" placeholder="Họ và tên" id="tentruongphong"/>
                     </div>
                 </div>
                 <div>
@@ -326,157 +250,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 d-flex flex-column">
-                <div>
-                    <div class="panel-heading" style="font-weight: 600">
-                        Thông tin Trưởng phòng
-                    </div>
-                    <div class="form-group ms-3 mb-3">
-                        <label>ID:</label>
-                        <input class="form-control" placeholder="ID" value="GD001"/>
-                    </div>
-                    <div class="form-group ms-3 mb-3">
-                        <label>Họ và tên:</label>
-                        <input class="form-control" placeholder="Họ và tên" value="Lê Thành Vinh"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="panel-heading" style="font-weight: 600">
-                        Tùy chọn Trưởng phòng
-                    </div>
-                    <div class="d-flex justify-content-around align-items-around">
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#ThemTruongPhong">
-                            Thêm
-                        </button>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#SuaTruongPhong">
-                            Sửa
-                        </button>
-                        <button type="submit" class="btn w-25 font-weight-bold btn-submit"
-                                data-bs-toggle="modal" data-bs-target="#XoaTruongPhong">
-                            Xóa
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 </div>
 
 <!-- TODO: Edit Modal HTML -->
-<!-- ? Trưởng phòng -->
-<!-- Thêm trưởng phòng -->
-<div class="modal fade" id="ThemTruongPhong" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                    Thêm trưởng phòng
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form id="commonForm">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-truong-phong" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id-giam-doc" placeholder="ID"
-                               required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ten-truong-phong" class="col-form-label">Tên trưởng
-                            phòng:</label>
-                        <input type="text" class="form-control" id="ten-giam-doc"
-                               placeholder="Tên trưởng phòng" required/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                            data-bs-dismiss="modal">
-                        Đóng
-                    </button>
-                    <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Thêm
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Sửa trưởng phòng -->
-<div class="modal fade" id="SuaTruongPhong" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                    Sửa trưởng phòng
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <form id="commonForm">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-truong-phong" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id-truong-phong" value="TP001"
-                               placeholder="ID" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ten-truong-phong" class="col-form-label">Tên trưởng
-                            phòng:</label>
-                        <input type="text" class="form-control" id="ten-truong-phong"
-                               value="Lê Thành Vinh"
-                               placeholder="Tên trưởng phòng" required/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                            data-bs-dismiss="modal">
-                        Đóng
-                    </button>
-                    <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Sửa
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Xóa trưởng phòng -->
-<div class="modal fade" id="XoaTruongPhong" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                    Xóa trưởng phòng này!?
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p style="font-size: 16px">
-                    Bạn có chắc chắn muốn xóa trưởng phòng này không? Hành động này
-                    không thể hoàn tác.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                        data-bs-dismiss="modal">
-                    Đóng
-                </button>
-                <button type="button" class="btn w-25 font-weight-bold btn-danger">
-                    Xóa
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- ? Phòng ban -->
 <!-- Thêm phòng ban -->
 <div class="modal fade" id="ThemPhongBan" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -485,23 +263,79 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Thêm phòng ban</h5>
+                <h5 class="modal-title">Thêm phòng ban</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form id="commonForm">
+            <form action="<%=request.getContextPath()%>/addphongban" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="ten-chi-nhanh" class="col-form-label">Tên chi nhánh:
+                        <label class="col-form-label">Mã chi nhánh:
                         </label>
-                        <input type="text" class="form-control" id="ten-chi-nhanh"
-                               placeholder="Tên chi nhánh" required/>
+                        <input type="text" class="form-control" name="MaChiNhanh"
+                               placeholder="Mã chi nhánh" required/>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã phòng ban:
+                            </label>
+                            <input type="text" class="form-control" name="MaPhongBan"
+                                   placeholder="Mã phòng ban" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên phòng ban:
+                            </label>
+                            <input type="text" class="form-control" name="TenPhongBan"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Ngày tạo:
+                            </label>
+                            <input type="date" class="form-control" name="NgayTao"
+                                   placeholder="Ngày tạo" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Số điện thoại:
+                            </label>
+                            <input type="number" class="form-control" name="SDT"
+                                   placeholder="Số điện thoại" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã chức vụ:
+                            </label>
+                            <input type="text" class="form-control" name="MaChucVu"
+                                   placeholder="Mã chức vụ" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên chức vụ:
+                            </label>
+                            <input type="text" class="form-control" name="TenChucVu"
+                                   placeholder="Tên chức vụ" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Lương cơ bản:
+                            </label>
+                            <input type="number" class="form-control" name="LuongCoBan"
+                                   placeholder="Lương cơ bản" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Mã trưởng phòng:
+                            </label>
+                            <input type="text" class="form-control" name="MaTruongPhong"
+                                   placeholder="Mã trưởng phòng" required/>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="ten-phong-ban" class="col-form-label">Tên phòng ban:
+                        <label class="col-form-label">Ngày bắt đầu:
                         </label>
-                        <input type="text" class="form-control" id="ten-phong-ban"
-                               placeholder="Tên phòng ban" required/>
+                        <input type="date" class="form-control" name="NgayBatDau"
+                               placeholder="Ngày bắt đầu" required/>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -524,23 +358,79 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Sửa phòng ban</h5>
+                <h5 class="modal-title">Sửa phòng ban</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form id="commonForm">
+            <form action="<%=request.getContextPath()%>/suaPhongBan" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="ten-chi-nhanh" class="col-form-label">Tên chi nhánh:
+                        <label class="col-form-label">Mã chi nhánh:
                         </label>
-                        <input type="text" class="form-control" id="ten-chi-nhanh"
-                               placeholder="Tên chi nhánh" value="TP.HCM" required/>
+                        <input type="text" class="form-control" name="SuaMaChiNhanh"
+                               id="SuaMaChiNhanh"
+                               placeholder="Mã chi nhánh" required/>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã phòng ban:
+                            </label>
+                            <input type="text" class="form-control" name="SuaMaPhongBan"
+                                   id="SuaMaPhongBan"
+                                   placeholder="Mã phòng ban" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Tên phòng ban:
+                            </label>
+                            <input type="text" class="form-control" name="SuaTenPhongBan"
+                                   id="SuatenPhongBan"
+                                   placeholder="Tên phòng ban" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Ngày tạo:
+                            </label>
+                            <input type="date" class="form-control" name="SuaNgayTao"
+                                   id="SuangayTao"
+                                   placeholder="Ngày tạo" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Số điện thoại:
+                            </label>
+                            <input type="number" class="form-control" name="SuaSDT" id="SuaSDT"
+                                   placeholder="Số điện thoại" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Mã chức vụ:
+                            </label>
+                            <input type="text" class="form-control" name="SuaMaChucVu"
+                                   id="SuaMaChucVu"
+                                   placeholder="Mã chức vụ" required/>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div>
+                            <label class="col-form-label">Lương cơ bản:
+                            </label>
+                            <input type="number" class="form-control" name="SuaLuongCoBan"
+                                   placeholder="Lương cơ bản" required/>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Mã trưởng phòng:
+                            </label>
+                            <input type="text" class="form-control" name="SuaMaTruongPhong"
+                                   id="SuaMaTruongPhong"
+                                   placeholder="Mã trưởng phòng" required/>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="ten-phong-ban" class="col-form-label">Tên phòng ban:
+                        <label class="col-form-label">Ngày bắt đầu:
                         </label>
-                        <input type="text" class="form-control" id="ten-phong-ban"
-                               placeholder="Tên phòng ban" value="Marketing" required/>
+                        <input type="date" class="form-control" name="SuaNgayBatDau"
+                               placeholder="Ngày bắt đầu" required/>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -549,7 +439,7 @@
                         Đóng
                     </button>
                     <button type="button submit" class="btn w-25 font-weight-bold btn-submit">
-                        Thêm
+                        Sửa
                     </button>
                 </div>
             </form>
@@ -569,25 +459,87 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p style="font-size: 16px">
-                    Bạn có chắc chắn muốn xóa phòng ban này không? Hành động này không
-                    thể hoàn tác.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn w-25 font-weight-bold btn-warning"
-                        data-bs-dismiss="modal">
-                    Đóng
-                </button>
-                <button type="button submit" class="btn w-25 font-weight-bold btn-danger">
-                    Xóa
-                </button>
-            </div>
+            <form action="<%=request.getContextPath()%>/deletephongban" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label">Mã phòng ban:
+                        </label>
+                        <input type="text" class="form-control" name="DeleteMaPhongBan"
+                               id="XoaMaPhongBan"
+                               placeholder="Mã phòng ban" required/>
+                    </div>
+                    <p style="font-size: 16px">
+                        Bạn có chắc chắn muốn xóa phòng ban này không? Hành động này không
+                        thể hoàn tác.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn w-25 font-weight-bold btn-warning"
+                            data-bs-dismiss="modal">
+                        Đóng
+                    </button>
+                    <button type="button submit" class="btn w-25 font-weight-bold btn-danger">
+                        Xóa
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/js/quanli.js"></script>
+<script>
+  function Search() {
+    var searchValue = document.getElementById('text_box_find').value;
+
+    var searchTable = document.getElementById('BangTruongPhong');
+    var searchColCount;
+
+    for (var rowIndex = 0; rowIndex < searchTable.rows.length; rowIndex++) {
+      var rowData = '';
+
+      if (rowIndex == 0) {
+        searchColCount = searchTable.rows.item(rowIndex).cells.length;
+        continue;
+      }
+
+      for (var colIndex = 0; colIndex < searchColCount; colIndex++) {
+        rowData += searchTable.rows.item(rowIndex).cells.item(colIndex).textContent;
+      }
+
+      if (rowData.indexOf(searchValue) == -1)
+        searchTable.rows.item(rowIndex).style.display = 'none';
+      else
+        searchTable.rows.item(rowIndex).style.display = 'table-row';
+    }
+  }
+
+  function DisplayInfo(e) {
+    let list = <%= json%>;
+    let row = e.target.parentNode;
+    let maPB = row.cells[2].innerHTML;
+    // clear space maPB
+    maPB = maPB.replace(/\s/g, '');
+
+    for (let i = 0; i < list.length; i++) {
+      let emp = list[i];
+      if (emp.maPB == maPB) {
+        document.getElementById('tenphongban').value = emp.tenPB;
+        document.getElementById('idtruongphong').value = emp.maNhanVien;
+        document.getElementById('tentruongphong').value = emp.hoTen;
+
+        document.getElementById('XoaMaPhongBan').value = emp.maPB;
+
+        document.getElementById('SuaMaChiNhanh').value = emp.maChiNhanh;
+        document.getElementById('SuaMaPhongBan').value = emp.maPB;
+        document.getElementById('SuaTenPhongBan').value = emp.tenPB;
+        document.getElementById('SuaMaChucVu').value = emp.maChucVu;
+        document.getElementById('SuaMaTruongPhong').value = emp.maNhanVien;
+        break;
+      }
+
+    }
+  }
+</script>
 </body>
 
 </html>

@@ -464,6 +464,7 @@ public class QuanLyNhanVienController extends HttpServlet {
         else
         {
             Boolean result = null;
+            int errorLine = 0;
 
             String json = request.getParameter("jsondata");
             String newJson = ConvertToUTF8(json);
@@ -475,6 +476,11 @@ public class QuanLyNhanVienController extends HttpServlet {
             for (int i = 0; i < list.size(); i++)
             {
                 result = (quanLyNhanVienDAO.AddEmployee(list.get(i)));
+                if(!result)
+                {
+                    errorLine = i+1;
+                    break;
+                }
             }
 
             if(result == true)
@@ -483,7 +489,7 @@ public class QuanLyNhanVienController extends HttpServlet {
             }
             else
             {
-                request.setAttribute("Result","Thêm danh sách nhân viên thất bại");
+                request.setAttribute("Result","Thêm danh sách nhân viên gặp lỗi từ dòng " + errorLine);
             }
 
             if(login.getQuyen().equals("giamdoc"))

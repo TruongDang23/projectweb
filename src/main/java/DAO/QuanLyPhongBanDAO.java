@@ -58,13 +58,13 @@ public class QuanLyPhongBanDAO {
     return result;
   }
 
-  public List<ThongTinTruongPhong> findDepartment(String maChiNhanh, String tenPhongBan)
+  public List<ThongTinTruongPhong> findDepartment(String tenChiNhanh, String tenPhongBan)
   {
     List<ThongTinTruongPhong> result = new ArrayList<>();
     try (Connection connection = JDBCUtil.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM thongtintruongphong WHERE MaChiNhanh = ? and  TenPB LIKE ?;");) {
+         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM thongtintruongphong WHERE TenChiNhanh LIKE ? and  TenPB LIKE ?;");) {
 
-      preparedStatement.setString(1,maChiNhanh);
+      preparedStatement.setString(1,tenChiNhanh);
       preparedStatement.setString(2,tenPhongBan);
 
       ResultSet rs = preparedStatement.executeQuery();

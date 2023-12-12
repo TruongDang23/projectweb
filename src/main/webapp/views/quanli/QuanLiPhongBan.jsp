@@ -189,18 +189,17 @@
                 </div>
                 <div>
                     <form action="<%=request.getContextPath()%>/findphongban" method="post">
-
                         <div class="panel-heading" style="font-weight: 600">Tìm kiếm</div>
                         <div class="d-flex mb-3 justify-content-around align-items-around">
-                            <select class="form-select w-25">
+                            <select class="form-select w-25 ms-3" name="tenCN" id="tenCN">
                                 <option selected>Chọn chi nhánh</option>
-                                <option value="1">Hà Nội</option>
-                                <option value="2">TP.HCM</option>
-                                <option value="3">Nha Trang</option>
+                                <c:forEach var="listChiNhanh" items="${listChiNhanh}">
+                                    <option value="${listChiNhanh.tenChiNhanh}"><c:out value="${listChiNhanh.tenChiNhanh}" /></option>
+                                </c:forEach>
                             </select>
                             <select class="form-select w-25 ms-3" name="tenPB" id="tenPB">
                                 <option selected>Chọn phòng ban</option>
-                                <c:forEach var="listDepart" items="${tenPhongBan}">
+                                <c:forEach var="listDepart" items="${listPhongBan}">
                                     <option value="${listDepart.tenPhongBan}"><c:out
                                             value="${listDepart.tenPhongBan}"/></option>
                                 </c:forEach>
@@ -208,6 +207,16 @@
                             <input class="form-control w-25" placeholder="Tìm kiếm"
                                    name="text_box_find"
                                    id="text_box_find" onkeyup="Search()"/>
+                        </div>
+                        <div
+                                class="d-flex mb-3 justify-content-around align-items-around"
+                        >
+                            <button
+                                    type="submit"
+                                    class="btn w-25 ms-3 font-weight-bold btn-submit"
+                            >
+                                Tìm
+                            </button>
                         </div>
                     </form>
                 </div>

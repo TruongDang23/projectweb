@@ -2,20 +2,16 @@ package Controller;
 
 import DAO.QuanLyNhanVienDAO;
 import DAO.QuanLyPhongBanDAO;
-import JDBCUtils.HandleException;
 import Models.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 @WebServlet(name = "QuanLyPhongBanController", urlPatterns = {"/listphongban", "/findphongban",
     "/addphongban", "/suaPhongBan", "/deletephongban"})
@@ -82,11 +78,15 @@ public class QuanLyPhongBanController extends HttpServlet {
           maPhongBan, login.getQuyen());
       listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
       List < PhongBan > listDepartment = quanLyNhanVienDAO.selectAllDepart(maChiNhanh);
+      List <ChiNhanh> listChiNhanh = quanLyNhanVienDAO.selectAllBranch();
+      List <PhongBan> listPhongBan = quanLyNhanVienDAO.selectAllDepart();
 
       request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
 
       if (login.getQuyen().equals("admin")) {
         request.setAttribute("listTruongPhong", listTruongPhong);
+        request.setAttribute("listChiNhanh",listChiNhanh);
+        request.setAttribute("listPhongBan",listPhongBan);
         RequestDispatcher dispatcher = request.getRequestDispatcher(
             "views/quanli/QuanLiPhongBan.jsp");
         dispatcher.forward(request, response);
@@ -220,22 +220,37 @@ public class QuanLyPhongBanController extends HttpServlet {
       response.sendRedirect("views/system/login.jsp");
     } else {
       String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());
-      String maPhongBan = quanLyPhongBanDAO.LayMaPhongBan(login.getMaTaiKhoan());
 
       String tenPB = request.getParameter("tenPB");
+      String tenCN = request.getParameter("tenCN");
+
       tenPB = ConvertToUTF8(tenPB);
 
       if(tenPB.equals("Chọn phòng ban"))
         tenPB="%";
 
-      List<ThongTinTruongPhong> listTruongPhong = quanLyPhongBanDAO.findDepartment(maChiNhanh, tenPB);
+      if(tenCN != null)
+      {
+        tenCN = ConvertToUTF8(tenCN);
+        if(tenCN.equals("Chọn chi nhánh"))
+          tenCN="%";
+      }
+      else {
+        tenCN = quanLyPhongBanDAO.LayTenChiNhanh(maChiNhanh);
+      }
+
+      List<ThongTinTruongPhong> listTruongPhong = quanLyPhongBanDAO.findDepartment(tenCN, tenPB);
       listPhongBanInfo = quanLyPhongBanDAO.LoadInfoPhongBan();
       List < PhongBan > listDepartment = quanLyNhanVienDAO.selectAllDepart(maChiNhanh);
+      List <ChiNhanh> listChiNhanh = quanLyNhanVienDAO.selectAllBranch();
+      List <PhongBan> listPhongBan = quanLyNhanVienDAO.selectAllDepart();
 
       request.setAttribute("thongTinTruongPhong", listPhongBanInfo);
 
       if (login.getQuyen().equals("admin")) {
         request.setAttribute("listTruongPhong", listTruongPhong);
+        request.setAttribute("listChiNhanh",listChiNhanh);
+        request.setAttribute("listPhongBan",listPhongBan);
         RequestDispatcher dispatcher = request.getRequestDispatcher(
                 "views/quanli/QuanLiPhongBan.jsp");
         dispatcher.forward(request, response);

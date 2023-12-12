@@ -178,7 +178,6 @@ public class QuanLyChiNhanhController extends HttpServlet {
             xa = ConvertToUTF8(xa);
             huyen = ConvertToUTF8(huyen);
             tinh = ConvertToUTF8(tinh);
-            ngayTaoChiNhanh = ConvertToUTF8(ngayTaoChiNhanh);
             sdt = ConvertToUTF8(sdt);
             maGiamDoc = ConvertToUTF8(maGiamDoc);
             newChinhanh = new ChiNhanh(maChiNhanh,tenChiNhanh,soNha,xa,huyen,tinh,ngayTaoChiNhanh,sdt,maGiamDoc);
@@ -221,7 +220,6 @@ public class QuanLyChiNhanhController extends HttpServlet {
             xa = ConvertToUTF8(xa);
             huyen = ConvertToUTF8(huyen);
             tinh = ConvertToUTF8(tinh);
-            ngayTaoChiNhanh = ConvertToUTF8(ngayTaoChiNhanh);
             sdt = ConvertToUTF8(sdt);
 
             newChinhanh = new ChiNhanh(maChiNhanh,tenChiNhanh,soNha,xa,huyen,tinh,ngayTaoChiNhanh,sdt,maGiamDoc);

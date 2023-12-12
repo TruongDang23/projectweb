@@ -573,7 +573,7 @@
                                 type="date"
                                 class="form-control"
                                 id="updatengayTaoChiNhanh"
-                                name="ngayTaoChiNhanh"
+                                name="updatengayTaoChiNhanh"
                                 placeholder="mm/dd/yyyy"
                                 required
                         />
@@ -724,6 +724,7 @@
                 document.getElementById("updatexa").value = emp.xa;
                 document.getElementById("updatehuyen").value = emp.huyen;
                 document.getElementById("updatetinh").value = emp.tinh;
+                document.getElementById("updatengayTaoChiNhanh").value = emp.ngayTaoChiNhanh;
                 document.getElementById("updatesdt").value = emp.sdt;
                 document.getElementById("updatemagiamdoc").value = emp.maGiamDoc;
             }

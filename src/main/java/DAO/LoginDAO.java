@@ -1,5 +1,7 @@
 package DAO;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,8 +32,9 @@ public class LoginDAO
              // Step 2:Create a statement using connection object
              PreparedStatement preparedStatement = connection
                      .prepareStatement("select * from taikhoan where TenDangNhap = ? and MatKhau = ? ")) {
+            String hashPass = hash(login.getMatKhau());
             preparedStatement.setString(1, login.getTenDangNhap());
-            preparedStatement.setString(2, login.getMatKhau());
+            preparedStatement.setString(2, hashPass);
 
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
@@ -106,5 +109,29 @@ public class LoginDAO
             HandleException.printSQLException(e);
         }
         return result;
+    }
+    
+    private String hash(String pass)
+    {
+        try
+        {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(pass.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for(byte b : hashBytes)
+            {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1)
+                {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            return "";
+        }
     }
 }

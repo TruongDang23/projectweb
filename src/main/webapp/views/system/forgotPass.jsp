@@ -29,8 +29,8 @@
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/forgotPass.css" />
     <link href="${pageContext.request.contextPath}/img/logo.png" rel="icon" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    <script Content-Security-Policy:src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script Content-Security-Policy:src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
     <script>
         $("#commonForm").validate();
     </script>
@@ -38,7 +38,7 @@
     <title>Quên mật khẩu</title>
 </head>
 <body>
-<script src="https://use.fontawesome.com/f59bcd8580.js"></script>
+<script Content-Security-Policy:src="https://use.fontawesome.com/f59bcd8580.js"></script>
 <%
     String err = (String) request.getAttribute("errMsg");
     String mk = (String) session.getAttribute("mk");

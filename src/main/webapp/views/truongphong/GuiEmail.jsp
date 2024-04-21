@@ -18,13 +18,13 @@
                 crossorigin="anonymous" />
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/truongphong.css" />
             <link href="${pageContext.request.contextPath}/img/logo.png" rel="icon" />
-            <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+            <script Content-Security-Policy:src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+            <script Content-Security-Policy:src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
             <title>Trưởng phòng - Gửi mail</title>
         </head>
 
         <body>
-            <script src="https://use.fontawesome.com/f59bcd8580.js"></script>
+            <script Content-Security-Policy:src="https://use.fontawesome.com/f59bcd8580.js"></script>
             <script>
                 window.onload = function () {
                     let msg = "<%= request.getAttribute("Result")%>";

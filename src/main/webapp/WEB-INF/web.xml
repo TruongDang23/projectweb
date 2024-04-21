@@ -26,34 +26,24 @@
         <param-value>gemu pyui rikh bttr</param-value>
     </context-param>
 
-<!--    <filter>
+    <filter>
+        <filter-name>XFrameOptionsFilter</filter-name>
+        <filter-class>Models.XFrameOptionsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XFrameOptionsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>XContentTypeOptionsFilter</filter-name>
-        <filter-class>org.apache.catalina.filters.SetAllHeadersFilter</filter-class>
-        <init-param>
-            <param-name>X-Content-Type-Options</param-name>
-            <param-value>nosniff</param-value>
-        </init-param>
+        <filter-class>Models.XContentTypeOptionsFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>XContentTypeOptionsFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>>
--->
-    <!--
-     <filter>
-    <filter-name>httpHeaderSecurity</filter-name>
-    <filter-class>org.apache.catalina.filters.HttpHeaderSecurityFilter</filter-class>
-    <async-supported>true</async-supported>
-    <init-param>
-        <param-name>xFrameOptionsHeader</param-name>
-        <param-value>SAMEORIGIN</param-value>
-    </init-param>
-</filter>
-<filter-mapping>
-    <filter-name>httpHeaderSecurity</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
--->
+    </filter-mapping>
+
 <!--    <error-page>-->
 <!--        <exception-type>java.lang.Exception</exception-type>-->
 <!--        <location>../error/error.jsp</location>-->

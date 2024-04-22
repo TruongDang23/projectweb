@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet","/logout"})
 public class LoginController extends HttpServlet
@@ -21,6 +23,7 @@ public class LoginController extends HttpServlet
     private String user;
     private String pass;
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = LogManager.getLogger(LoginDAO.class);
     private LoginDAO loginDAO=null;
 
     public void init()
@@ -66,7 +69,9 @@ public class LoginController extends HttpServlet
         TaiKhoan taikhoan = new TaiKhoan();
         taikhoan.setTenDangNhap(username);
         taikhoan.setMatKhau(password);
-
+        LOGGER.info("User: " + username + " is trying to login");
+        LOGGER.info("Date: " + new java.util.Date());
+        LOGGER.info("IP: " + request.getRemoteAddr());
         try {
             TaiKhoan user = loginDAO.validate(taikhoan);
             if(user != null)

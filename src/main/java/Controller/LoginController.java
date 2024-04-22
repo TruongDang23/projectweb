@@ -66,9 +66,10 @@ public class LoginController extends HttpServlet
         TaiKhoan taikhoan = new TaiKhoan();
         taikhoan.setTenDangNhap(username);
         taikhoan.setMatKhau(password);
+        String captchaResponse = request.getParameter("g-recaptcha-response");
 
         try {
-            TaiKhoan user = loginDAO.validate(taikhoan);
+            TaiKhoan user = loginDAO.validate(taikhoan, captchaResponse);
             if(user != null)
             {
                 HttpSession session = request.getSession();

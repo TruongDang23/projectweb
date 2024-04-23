@@ -12,6 +12,23 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%
+        String cspHeader = "default-src 'none'; ";
+        cspHeader += "script-src 'self'; ";
+        cspHeader += "style-src 'self' http://localhost:8080/FinalProject_war/views/system/css/style.css; ";
+        cspHeader += "font-src 'self'; ";
+        cspHeader += "connect-src 'self'; ";
+        cspHeader += "img-src 'self'; ";
+        cspHeader += "frame-src 'none'; ";
+        cspHeader += "frame-ancestors 'none'; ";
+        cspHeader += "media-src 'none'; ";
+        cspHeader += "object-src 'none'; ";
+        cspHeader += "manifest-src 'none'; ";
+        cspHeader += "worker-src 'none'; ";
+        cspHeader += "form-action 'self'; ";
+        response.setHeader("Content-Security-Policy", cspHeader);
+    %>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -34,6 +51,7 @@
     </script>
 
     <title>Đăng nhập</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 <script Content-Security-Policy:src="https://use.fontawesome.com/f59bcd8580.js"></script>
@@ -115,6 +133,7 @@
                     <% if (err!=null) {%>
                     <p style="color: red; text-align: center"><b><%= err %></b></p>
                     <%} %>
+                    <div class="g-recaptcha" data-sitekey="6LdlwMIpAAAAAAdm4ALNC6nwbVuseD7Dh8l2XYmd"></div>
                     <div class="pb-2 mb-4 text-center">
                         <button
                                 type="submit"

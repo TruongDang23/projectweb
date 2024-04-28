@@ -18,16 +18,16 @@ import java.util.List;
 public class CauTrucCongTyController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final List<String> WHITELIST_DOMAINS = Arrays.asList(
-        "http://localhost:8080/FinalProject_war/views/quanli/QuanLiCauTruc.jsp",
-            "http://localhost:8080/FinalProject_war/views/giamdoc/XemCauTruc.jsp",
-            "http://localhost:8080/FinalProject_war/views/truongphong/XemCauTruc.jsp",
-            "http://localhost:8080/FinalProject_war/views/nhanvien/NhanVienCauTruc.jsp",
-        "http://localhost:8080/FinalProject_war/xemcautruc",
-        "http://localhost:8080/FinalProject_war/infoEmployee",
-        "http://localhost:8080/FinalProject_war/listChiNhanh",
-        "http://localhost:8080/FinalProject_war/listphongban",
-        "http://localhost:8080/FinalProject_war/listemployee",
-        "http://localhost:8080/FinalProject_war/listSalary");
+        "http://localhost:8080/FinalProject_war_exploded/views/quanli/QuanLiCauTruc.jsp",
+            "http://localhost:8080/FinalProject_war_exploded/views/giamdoc/XemCauTruc.jsp",
+            "http://localhost:8080/FinalProject_war_exploded/views/truongphong/XemCauTruc.jsp",
+            "http://localhost:8080/FinalProject_war_exploded/views/nhanvien/NhanVienCauTruc.jsp",
+        "http://localhost:8080/FinalProject_war_exploded/xemcautruc",
+        "http://localhost:8080/FinalProject_war_exploded/infoEmployee",
+        "http://localhost:8080/FinalProject_war_exploded/listChiNhanh",
+        "http://localhost:8080/FinalProject_war_exploded/listphongban",
+        "http://localhost:8080/FinalProject_war_exploded/listemployee",
+        "http://localhost:8080/FinalProject_war_exploded/listSalary");
     private CauTrucCongTyDAO cauTrucCongTyDAO = null;
 
     public void init() {

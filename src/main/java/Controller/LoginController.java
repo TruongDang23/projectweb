@@ -88,6 +88,7 @@ public class LoginController extends HttpServlet
                 CsrfTokenUtil.saveCsrfToken(session);
                 String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
                 System.out.println("Token: " + token);
+
                 if(!CsrfTokenUtil.isCsrfTokenValid(session, token))
                 {
                     response.sendRedirect("views/system/login.jsp");

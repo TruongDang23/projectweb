@@ -63,6 +63,7 @@ public class CapNhatThongTinController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
+
     String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
     System.out.println("Token: " + token);
     if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))

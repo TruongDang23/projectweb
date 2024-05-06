@@ -1,5 +1,4 @@
 package JDBCUtils;
-
 import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
 import java.util.Base64;

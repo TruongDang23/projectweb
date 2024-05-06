@@ -50,7 +50,7 @@ public class LoginDAO {
                      .prepareStatement("select * from taikhoan where TenDangNhap = ? and MatKhau = ? ")) {
             String hashPass = hash(login.getMatKhau());
             preparedStatement.setString(1, login.getTenDangNhap());
-            preparedStatement.setString(2, hashPass);
+            preparedStatement.setString(2, login.getMatKhau());
 
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();

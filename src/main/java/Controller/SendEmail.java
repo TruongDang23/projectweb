@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.EmailDAO;
+import JDBCUtils.CsrfTokenUtil;
 import Models.TaiKhoan;
 
 import javax.servlet.*;
@@ -8,6 +9,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+
+import static JDBCUtils.CsrfTokenUtil.CSRF_TOKEN_ATTR;
 
 @WebServlet(name = "SendEmail", urlPatterns = {"/sendemail"})
 public class SendEmail extends HttpServlet {
@@ -35,8 +38,9 @@ public class SendEmail extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else{
             String recipient = request.getParameter("received-email");

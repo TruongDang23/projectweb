@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.QuanLyNhanVienDAO;
 import DAO.QuanLyPhongBanDAO;
+import JDBCUtils.CsrfTokenUtil;
 import Models.*;
 
 import javax.servlet.*;
@@ -12,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
+
+import static JDBCUtils.CsrfTokenUtil.CSRF_TOKEN_ATTR;
 
 @WebServlet(name = "QuanLyPhongBanController", urlPatterns = {"/listphongban", "/findphongban",
     "/addphongban", "/suaPhongBan", "/deletephongban"})
@@ -67,8 +70,10 @@ public class QuanLyPhongBanController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if (login == null) {
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
+    {
       response.sendRedirect("views/system/login.jsp");
     } else {
       String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());
@@ -105,8 +110,10 @@ public class QuanLyPhongBanController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if (login == null) {
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
+    {
       response.sendRedirect("views/system/login.jsp");
     } else {
       String maChiNhanh = request.getParameter("MaChiNhanh");
@@ -147,8 +154,10 @@ public class QuanLyPhongBanController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if (login == null) {
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
+    {
       response.sendRedirect("views/system/login.jsp");
     } else {
       String maChiNhanh = request.getParameter("SuaMaChiNhanh");
@@ -187,8 +196,10 @@ public class QuanLyPhongBanController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if (login == null) {
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
+    {
       response.sendRedirect("views/system/login.jsp");
     } else {
       String maPhongBan = request.getParameter("DeleteMaPhongBan");
@@ -215,8 +226,10 @@ public class QuanLyPhongBanController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if (login == null) {
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
+    {
       response.sendRedirect("views/system/login.jsp");
     } else {
       String maChiNhanh = quanLyPhongBanDAO.LayMaChiNhanh(login.getMaTaiKhoan());

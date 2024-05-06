@@ -46,10 +46,26 @@
     <link href="${pageContext.request.contextPath}/img/logo.png" rel="icon" />
     <script Content-Security-Policy:src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script Content-Security-Policy:src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
     <script>
         $("#commonForm").validate();
     </script>
+    <script>
+        function hashPassword() {
+            var passwordInput = document.getElementById("password");
+            var password = passwordInput.value;
 
+            // Hash the password using SHA-256
+            var hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+
+            // Set the hashed password back to the password input
+            passwordInput.value = hashedPassword;
+
+            // Continue with form submission
+            return true;
+        }
+    </script>
     <title>Đăng nhập</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -72,75 +88,29 @@
             <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo" class="card-img-top logo-img" />
             <h3 class="pb-3 mt-2 text-center">Đăng nhập</h3>
             <div class="form-style">
-                <form id="commonForm" action="<%=request.getContextPath()%>/login" method="post">
-                    <div
-                            class="form-group pb-3 d-flex align-items-center justify-content-around"
-                    >
-                <span>
-                  <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="icon-sgv"
-                  >
-                    <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                </span>
-                        <input
-                                type="username"
-                                placeholder="Tên đăng nhập"
-                                class="form-control w-75"
-                                id="username"
-                                name="username"
-                                aria-describedby="username"
-                                required
-                        />
+                <form id="commonForm" action="<%=request.getContextPath()%>/login" method="post" onsubmit="hashPassword()">
+                    <div class="form-group pb-3 d-flex align-items-center justify-content-around">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-sgv">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </span>
+                        <input type="username" placeholder="Tên đăng nhập" class="form-control w-75" id="username" name="username" aria-describedby="username" required />
                     </div>
-                    <div
-                            class="form-group pb-3 d-flex align-items-center justify-content-around"
-                    >
-                <span>
-                  <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="icon-sgv"
-                  >
-                    <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
-                    />
-                  </svg>
-                </span>
-                        <input
-                                type="password"
-                                placeholder="Mật khẩu"
-                                class="form-control w-75"
-                                id="password"
-                                name="password"
-                                required
-                        />
+                    <div class="form-group pb-3 d-flex align-items-center justify-content-around">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-sgv">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/>
+            </svg>
+        </span>
+                        <input type="password" placeholder="Mật khẩu" class="form-control w-75" id="password" name="password" required />
                     </div>
                     <% if (err!=null) {%>
                     <p style="color: red; text-align: center"><b><%= err %></b></p>
                     <%} %>
                     <div class="g-recaptcha" data-sitekey="6LdlwMIpAAAAAAdm4ALNC6nwbVuseD7Dh8l2XYmd"></div>
                     <div class="pb-2 mb-4 text-center">
-                        <button
-                                type="submit"
-                                class="btn w-25 font-weight-bold mt-2 btn-DangNhap"
-                        >
-                            Đăng nhập
-                        </button>
+                        <button type="submit" class="btn w-25 font-weight-bold mt-2 btn-DangNhap">Đăng nhập</button>
                     </div>
                     <div class="d-flex justify-content-center">
                         <p class="p-1">Quên mật khẩu?</p>
@@ -151,6 +121,8 @@
         </div>
     </div>
 </div>
+
 </body>
+
 </html>
 

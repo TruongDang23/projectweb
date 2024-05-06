@@ -66,6 +66,7 @@ public class LoginController extends HttpServlet
     private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println("pass: " +password);
         TaiKhoan taikhoan = new TaiKhoan();
         taikhoan.setTenDangNhap(username);
         taikhoan.setMatKhau(password);

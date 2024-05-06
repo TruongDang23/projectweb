@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.QuanLyNhanVienDAO;
+import JDBCUtils.CsrfTokenUtil;
 import JDBCUtils.HandleException;
 import Models.*;
 
@@ -15,6 +16,8 @@ import java.text.ParseException;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import static JDBCUtils.CsrfTokenUtil.CSRF_TOKEN_ATTR;
 
 @WebServlet(name = "QuanLyNhanVienController", urlPatterns = {"/listemployee", "/findemployee", "/addemployee", "/deleteemployee", "/updateemployee", "/addreward", "/discipline","/addexcel"})
 public class QuanLyNhanVienController extends HttpServlet {
@@ -76,8 +79,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -135,8 +139,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -215,8 +220,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -279,8 +285,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -311,8 +318,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -375,7 +383,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -416,8 +426,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {
@@ -458,8 +469,9 @@ public class QuanLyNhanVienController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
             response.sendRedirect("views/system/login.jsp");
         else
         {

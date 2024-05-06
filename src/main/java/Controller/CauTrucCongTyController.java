@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.CauTrucCongTyDAO;
+import JDBCUtils.CsrfTokenUtil;
 import JDBCUtils.HandleException;
 import Models.CayChiNhanh;
 import Models.TaiKhoan;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static JDBCUtils.CsrfTokenUtil.CSRF_TOKEN_ATTR;
 
 @WebServlet(name = "CauTrucCongTyController", urlPatterns = {"/xemcautruc"})
 public class CauTrucCongTyController extends HttpServlet {
@@ -56,8 +59,9 @@ public class CauTrucCongTyController extends HttpServlet {
         HttpSession session = request.getSession();
         TaiKhoan login = new TaiKhoan();
         login=(TaiKhoan)session.getAttribute("user");
-
-        if(login == null)
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
         {
             response.sendRedirect("views/system/login.jsp");
         }

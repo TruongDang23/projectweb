@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.LoginDAO;
+import JDBCUtils.CsrfTokenUtil;
 import Models.TaiKhoan;
 import java.io.IOException;
 import javax.mail.MessagingException;
@@ -14,6 +15,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static JDBCUtils.CsrfTokenUtil.CSRF_TOKEN_ATTR;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login","/EmailSendingServlet","/logout"})
 public class LoginController extends HttpServlet
@@ -82,7 +85,13 @@ public class LoginController extends HttpServlet
             {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-
+                CsrfTokenUtil.saveCsrfToken(session);
+                String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+                System.out.println("Token: " + token);
+                if(!CsrfTokenUtil.isCsrfTokenValid(session, token))
+                {
+                    response.sendRedirect("views/system/login.jsp");
+                }
                 if (user.getQuyen().equals("admin")) {
                     response.sendRedirect("views/quanli/QuanLiCauTruc.jsp");
                 } else if (user.getQuyen().equals("giamdoc")) {
@@ -108,20 +117,30 @@ public class LoginController extends HttpServlet
         // reads form fields
         String email = request.getParameter("email");
         String tendangnhap = request.getParameter("tenDangNhap");
-        try
+        HttpSession session = request.getSession();
+        String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+        System.out.println("Token: " + token);
+        if(!CsrfTokenUtil.isCsrfTokenValid(session, token))
         {
-            String mk=LoginDAO.LayMatKhau(tendangnhap,email);
-            if(mk != "") {
-                LoginDAO.sendEmail(host, port, user, pass, email, tendangnhap);
-                response.sendRedirect("views/system/login.jsp");
+            response.sendRedirect("views/system/login.jsp");
+        }
+        else
+        {
+            try
+            {
+                String mk=LoginDAO.LayMatKhau(tendangnhap,email);
+                if(mk != "") {
+                    LoginDAO.sendEmail(host, port, user, pass, email, tendangnhap);
+                    response.sendRedirect("views/system/login.jsp");
+                }
+                else{
+                    request.setAttribute("errMsg", "Tài khoản hoặc email không chính xác");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("views/system/forgotPass.jsp");
+                    dispatcher.forward(request, response);
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            else{
-                request.setAttribute("errMsg", "Tài khoản hoặc email không chính xác");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("views/system/forgotPass.jsp");
-                dispatcher.forward(request, response);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.CapNhatThongTinDAO;
+import JDBCUtils.CsrfTokenUtil;
 import JDBCUtils.HandleException;
 import Models.*;
 
@@ -12,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
+
+import static JDBCUtils.CsrfTokenUtil.CSRF_TOKEN_ATTR;
 
 @WebServlet(name = "CapNhatThongTinController", urlPatterns = {"/infoEmployee",
     "/updateInfoEmployee"})
@@ -60,8 +63,9 @@ public class CapNhatThongTinController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if(login==null)
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
     {
       response.sendRedirect("views/system/login.jsp");
     }
@@ -100,8 +104,9 @@ public class CapNhatThongTinController extends HttpServlet {
     HttpSession session = request.getSession();
     TaiKhoan login = new TaiKhoan();
     login = (TaiKhoan) session.getAttribute("user");
-
-    if(login==null)
+    String token = (String) session.getAttribute(CSRF_TOKEN_ATTR);
+    System.out.println("Token: " + token);
+    if(login == null || !CsrfTokenUtil.isCsrfTokenValid(session, token))
     {
       response.sendRedirect("views/system/login.jsp");
     }

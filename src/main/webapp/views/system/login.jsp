@@ -15,7 +15,7 @@
 <%--    <%--%>
 <%--        String cspHeader = "default-src 'none'; ";--%>
 <%--        cspHeader += "script-src 'self'; ";--%>
-<%--        cspHeader += "style-src 'self' http://localhost:8080/FinalProject_war/views/system/css/style.css; ";--%>
+<%--        cspHeader += "style-src 'self' http://localhost:8080/FinalProject_war_exploded/views/system/css/style.css; ";--%>
 <%--        cspHeader += "font-src 'self'; ";--%>
 <%--        cspHeader += "connect-src 'self'; ";--%>
 <%--        cspHeader += "img-src 'self'; ";--%>
